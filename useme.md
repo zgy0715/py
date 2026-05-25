@@ -274,7 +274,7 @@ def get_user_info(username):
 #### 1. 分析热门项目描述情感
 
 ```bash
-python sentiment_analysis.py
+python tools/github_sentiment_analyzer.py
 ```
 
 **功能说明：**
@@ -383,7 +383,7 @@ target_count = 10
 
 #### 自定义情感词典
 
-在 `sentiment_analysis.py` 或 `github_sentiment_analyzer.py` 中修改关键词：
+在 `github_sentiment_analyzer.py` 中修改关键词：
 
 ```python
 # 增加积极词汇

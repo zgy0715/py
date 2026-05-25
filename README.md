@@ -61,7 +61,7 @@
 │   └── requirements.txt              #   Python 依赖
 │
 ├── dashboard/                        # Streamlit 可视化看板
-│   ├── app.py                        #   入口（黑白主题切换、数据加载）
+│   ├── app.py                        #   入口（数据加载与页面路由）
 │   ├── config.py                     #   配置（CSV 路径、颜色映射、主题常量）
 │   ├── requirements.txt              #   Python 依赖
 │   ├── data/                         # 数据加载层
@@ -131,10 +131,10 @@
 | 消息队列 | Redis | URL 队列、去重、实时排行榜 |
 | 持久存储 | MongoDB | 数据持久化 |
 | API 层 | Flask 3.x | RESTful 接口 |
-| 看板 | Streamlit + Plotly | 交互式可视化（支持深色/浅色主题） |
+| 看板 | Streamlit + Plotly | 交互式可视化 |
 | 前端 | Vite + ECharts 5 (CDN) | 可视化仪表盘 |
 | 分析 | TextBlob + GitHub API | 情感分析 |
-| AI 分析 | DeepSeek API (deepseek-v4-pro) | 趋势洞察与智能分析 |
+| AI 分析 | DeepSeek API (deepseek-chat) | 趋势洞察与智能分析 |
 
 ---
 
@@ -333,8 +333,6 @@ SCRAPY_SETTINGS_MODULE=scrapy_hotspot.settings scrapy crawl reddit
 | **Trends 趋势** | 时段项目数对比、平均日增长、语言×时段热力图、分时段散点 |
 | **Export 导出** | CSV/JSON 一键导出、按源/时段筛选 |
 
-深色/浅色主题可通过侧边栏一键切换，图表颜色自动适配。
-
 ### ECharts 前端仪表盘（3 个页面）
 
 | 页面 | 功能 |
@@ -454,12 +452,6 @@ MIT
 - 移除根目录重复 CSV、`web/` 备用看板、`trending_sample.html`、`new add README.md`、空文件 `run.py`
 - 移除 `visualization-platform/public/` 和 `dist/` 中的冗余 CSV 副本
 - 移动 `requirements-dashboard.txt` → `dashboard/requirements.txt`
-
-**Streamlit 黑白主题切换**
-- 侧边栏新增 Theme 切换按钮（Dark / Light）
-- CSS 全部改为动态变量，根据主题切换深色/浅色配色
-- Plotly 图表自动适配 `plotly_dark` / `plotly_white` 模板
-- 词云、空白占位图等组件同步适配
 
 **多源对比修复**
 - `api_loader.py`：改用 `/api/sources` 跨所有 MongoDB 集合聚合来源，每个来源从数据最多的集合拉取数据

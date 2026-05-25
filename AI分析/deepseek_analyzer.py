@@ -18,7 +18,7 @@ DB_NAME = "tech_hotspot"
 
 DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
 DEEPSEEK_API_URL = "https://api.deepseek.com/chat/completions"
-DEEPSEEK_MODEL = "deepseek-v4-pro"
+DEEPSEEK_MODEL = "deepseek-chat"
 
 LOG_DIR = os.path.dirname(os.path.abspath(__file__))
 LOG_FILE = os.path.join(LOG_DIR, "insight_analysis.log")

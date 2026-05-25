@@ -1,0 +1,30 @@
+{
+  "趋势识别": [
+    "AI编码代理技能系统化爆发，本周前10项目中有5个是Agent技能/配置框架，累计新增超过22万星，标志行业从单一工具转向方法论沉淀",
+    "Rust在AI工具链中加速渗透，本周3个Rust项目（warp、cc-switch、rtk）涉及终端代理、Token压缩和桌面助手，累计新增超8万星，显示性能敏感型AI基础设施正在用Rust重写",
+    "多代理金融交易框架崛起，TradingAgents单周新增2.5万星，结合金融数据终端FinceptTerminal（+1.8万星），AI在量化交易领域的专业应用成为新热点"
+  ],
+  "值得关注的项目": [
+    "multica-ai/andrej-karpathy-skills（+80,814星）：基于Karpathy经验的单文件Claude Code行为改进，引爆Agent技能标准化趋势，建议研究其CLAUDE.md设计模式",
+    "rtk-ai/rtk（+21,036星）：Rust编写的CLI代理，宣称减少60-90% LLM Token消耗，零依赖单二进制，直接解决AI开发成本痛点，建议在生产环境测试",
+    "the-dot-mack/claude-mem（+15,770星）：为Agent提供跨会话持久上下文，通过AI压缩和注入机制实现记忆，解决Agent长期任务的核心痛点",
+    "CloakHQ/CloakBrowser（+11,968星）：通过源码级指纹修补绕过所有机器人检测，30/30测试通过，对爬虫、自动化测试和反检测领域有突破性价值"
+  ],
+  "学习路径": [
+    "AI Agent技能工程方向：关注CLAUDE.md、agent-skills等配置文件设计模式，学习如何系统化提升编码代理行为，推荐从mattpocock/skills和addyosmani/agent-skills入手",
+    "Rust在AI基础设施方向：学习用Rust构建高性能LLM代理、Token优化工具和终端应用，推荐研究rtk和warp的架构，掌握candle、llama.cpp等推理库",
+    "多代理金融应用方向：深入TradingAgents框架，学习多代理协作、市场数据分析和交易策略设计，结合FinceptTerminal掌握金融数据API集成"
+  ],
+  "信号挖掘": [
+    "Agent记忆管理成为新赛道：agentmemory（+9,195星）和claude-mem（+15,770星）一周内同时爆发，表明持久上下文和会话记忆是Agent从玩具到工具的关键瓶颈",
+    "免费/低成本AI代理方案需求激增：free-claude-code（+23,360星）和9router（+8,852星）提供免费API接入和多提供商回退，反映开发者对AI成本控制的高度关注",
+    "视频生成自动化与反检测工具并行增长：Pixelle-Video（+13,649星）和CloakBrowser（+11,968星）分别代表内容生产与反检测两个极端，暗示AI代理正被用于大规模自动化操作",
+    "个人AI助理念向本地化演进：openhuman（+11,571星）主打私有、简单、强大，结合tinyhumansai品牌，显示用户对云端AI隐私担忧催生本地部署方案需求"
+  ],
+  "metadata": {
+    "projects_count": 100,
+    "analyzed_at": "2026-05-25T12:47:05.284329+00:00",
+    "collection": "hotspot_2026_05_18",
+    "model": "deepseek-chat"
+  }
+}
