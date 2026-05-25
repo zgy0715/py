@@ -1,0 +1,32 @@
+{
+  "趋势识别": [
+    "Agent技能工程爆发：多个高星项目将开发最佳实践封装为可复用的提示/技能文件，如andrej-karpathy-skills（+80k星）、mattpocock/skills（+72k星），预示Agent能力将从简单命令走向可积累的技能体系。",
+    "Claude生态在开发者端占据主导：围绕Claude Code的集成工具（cc-switch、multica、claude-mem）和技能包持续高速增长，说明Claude已成为编程助手事实标准之一。",
+    "Rust加速渗透AI工具链：本周warp（+32k星）、rtk（+21k星）、cc-switch（+27k星）等多个Rust项目上榜，显示其在构建高性能、低资源AI中间件和代理环境中的优势。",
+    "多模态AI内容创作迈向实用化：视频生成（hyperframes +17k星、Pixelle-Video +13k星）、PPT自动生成（ppt-master +11k星）等项目崛起，表明AI创作正从文本向专业多媒体内容快速扩展。"
+  ],
+  "值得关注的项目": [
+    "multica-ai/andrej-karpathy-skills：本周增长+80,814星，一份CLAUDE.md技能文件引发现象级传播，验证了精简提示工程在改进LLM编码行为上的巨大价值，值得关注其方法在其他模型上的泛化能力。",
+    "obra/superpowers：总星数195,804，周增+38,379，一个主张代理驱动开发的方法论和技能框架，定位务实，可能重塑团队协作与软件交付流程。",
+    "rtk-ai/rtk：+21,036星，使用Rust构建的CLI代理，能将常用开发命令的Token消耗降低60-90%，在API成本敏感场景下极具竞争力，实现简单且无依赖。",
+    "thedotmack/claude-mem：+15,770星，为AI编码助手提供跨会话持久上下文，解决了长期记忆的核心痛点，是Agent走向实用化的关键拼图。",
+    "CloakHQ/CloakBrowser：+11,968星，隐形Chromium浏览器，基于源代码级指纹补丁，通过全部反检测测试，反映出AI代理在对抗性自动化场景中的需求日益增强。"
+  ],
+  "学习路径": [
+    "AI Agent设计与技能工程：掌握Claude Code自定义、superpowers等技能框架，学习如何将开发知识转化为可复用的Agent提示/规则，推荐关注LangChain、CrewAI生态及模板化训练方法。",
+    "高性能AI工具链构建：学习Rust语言及在AI推理中的应用（candle、llama.cpp），理解如何编写零依赖、低延迟的LLM代理和中间件，参考rtk、warp等项目的架构。",
+    "多模态AI内容创作：深入视频生成模型（如Kling、Sora API）和前端渲染管线（HTML视频合成），实践hyperframes等工具，结合PPT生成等场景，打造端到端的自动创作流水线。"
+  ],
+  "信号挖掘": [
+    "「技能复用市场」可能兴起：本周出现多个Agent技能集合项目，未来或将出现跨模型的技能共享平台，形成类似插件商店的生态，开发者可交易和组合优化后的提示/工作流。",
+    "Token成本优化成为产品核心卖点：rtk的爆发（+21k星）及9router集成其功能，显示降低LLM API开销能有效驱动用户增长，推理成本控制将成为工具链竞争的关键维度。",
+    "反检测技术成为AI自动化刚需：CloakBrowser的高速增长表明，越来越多的AI代理需在非友好环境下操作，网页反侦测与指纹隐藏正从爬虫领域渗透进AI Agent基础设施。",
+    "个人自托管AI基础架构需求显现：openhuman（个人AI超级智能）、9router（连接免费模型）等项目指向用户对私有、完全可控AI的追求，去中心化和本地推理的接受度正在提高。"
+  ],
+  "metadata": {
+    "projects_count": 100,
+    "analyzed_at": "2026-05-25T11:30:40.047007+00:00",
+    "collection": "hotspot_2026_05_18",
+    "model": "deepseek-v4-pro"
+  }
+}

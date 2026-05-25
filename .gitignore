@@ -9,10 +9,5 @@ dist/
 .tox/
 .eggs/
 *.egg-info/
-*.egg
 .idea/
 .claude/
-.obsidian/
-*.log
-AI分析/output/
-visualization-platform/node_modules/

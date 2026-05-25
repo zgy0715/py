@@ -1,0 +1,32 @@
+{
+  "趋势识别": [
+    "AI编码代理的\\",
+    "生态爆发，本周前10有5个与Claude Code/Codex技能和代理行为优化相关项目，且增长迅猛。",
+    "Rust深度渗透AI工具链，warp、cc-switch、rtk、openhuman等多个高星项目采用Rust构建，兼顾性能与部署便利性。",
+    "免费/低成本调用高级AI模型的需求驱动工具涌现，如free-claude-code、9router等，说明开发者对成本极度敏感。"
+  ],
+  "值得关注的项目": [
+    "multica-ai/andrej-karpathy-skills：单周+80,814星，基于Andrej Karpathy观察总结的Claude Code行为优化文件，极简但实用，可直接提升编码体验。",
+    "obra/superpowers：合计195,804星，本周+38,379星，提供代理技能框架与软件开发方法论，具有工程指导意义。",
+    "warpdotdev/warp：Rust编写的代理开发环境，本周+32,780星，从终端演进而来的全新IDE形态，可能改变开发流程。",
+    "rtk-ai/rtk：Rust实现的CLI代理，声称减少60-90% token消耗，本周+21,036星，单二进制零依赖，对于AI应用降本效果显著。",
+    "NousResearch/hermes-agent：155,480星，本周+59,362星，定位为\\",
+    "，社区热度极高，其架构和迭代思路值得研究。"
+  ],
+  "学习路径": [
+    "AI Agent开发：深入LangChain/LlamaIndex生态，结合Claude Code、Codex等具体代理的技能框架，实践多代理协作。",
+    "Rust用于AI推理与工具链：从candle、llama.cpp入手，学习用Rust构建高性能CLI工具、推理代理，如rtk、openhuman所示范。",
+    "代理技能设计与提示工程：研究superpowers、andrej-karpathy-skills等项目，掌握如何通过结构化提示文件系统性提升编码代理输出质量。"
+  ],
+  "信号挖掘": [
+    "隐身浏览器需求凸显：CloakHQ/CloakBrowser两周内增长超2万星，针对机器人检测的对抗技术正在成为独立品类，反映自动化与反自动化博弈加剧。",
+    "AI金融代理进入深水区：TauricResearch/TradingAgents（+25,690星）专注多代理金融交易，垂直行业代理从概念走向实盘级应用。",
+    "创意内容自动化井喷：AIDC-AI/Pixelle-Video（短视频引擎）和hugohe3/ppt-master（AI生成PPTX）均高速增长，AI不再局限于文本，正向视觉创作自动化扩展。"
+  ],
+  "metadata": {
+    "projects_count": 100,
+    "analyzed_at": "2026-05-25T10:55:46.016515+00:00",
+    "collection": "hotspot_2026_05_18",
+    "model": "deepseek-v4-pro"
+  }
+}

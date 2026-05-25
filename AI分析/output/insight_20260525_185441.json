@@ -1,0 +1,31 @@
+{
+  "趋势识别": [
+    "AI代理技能与记忆管理成为开发生态核心，本周TOP 30中10+项目为代理提供技能、记忆或持久化上下文（如andrej-karpathy-skills、agentmemory、claude-mem）",
+    "多模型路由与Token优化工具爆发，通过CLI代理或中间件降低60-90%成本并聚合免费接入（如rtk、9router、free-claude-code）",
+    "Rust加速渗透AI代理和工具链，本周3个新项目（warp、cc-switch、openhuman）基于Rust构建代理环境与个人AI",
+    "AI金融和自动化视频生成从实验走向应用，TradingAgents和Pixelle-Video获得超1.3万+周增长，体现垂直领域落地加速"
+  ],
+  "值得关注的项目": [
+    "multica-ai/andrej-karpathy-skills：本周+80,814星，通过单一CLAUDE.md规范提升Claude Code表现，源于Andrej Karpathy的LLM编码观察，有望确立AI代理行为配置的行业标准",
+    "rtk-ai/rtk：+21,036星，Rust构建的无依赖CLI代理，可减少60-90%的LLM Token消耗，在成本敏感场景极具实用价值",
+    "CloakHQ/CloakBrowser：+11,968星，隐形Chromium浏览器，通过指纹补丁通过所有机器人检测测试，对反爬和自动化测试工具生态产生深远影响",
+    "hugohe3/ppt-master：+11,869星，AI从文档生成原生可编辑PPTX，区别于图片式生成，瞄准商务办公自动化缺口"
+  ],
+  "学习路径": [
+    "AI代理技能框架方向：学习如何为Claude Code、Codex等定义可复用技能（Skills），关注obra/superpowers的代理开发方法论和multica的托管代理平台",
+    "Rust+AI工具链构建：掌握Rust基础并实践candle、llama.cpp等推理库，参考warp和rtk项目源码理解如何构建高性能CLI代理",
+    "AI代理记忆与持久化：研究agentmemory和claude-mem的上下文压缩与注入机制，结合LangChain或LlamaIndex实现跨会话的状态保持"
+  ],
+  "信号挖掘": [
+    "代理技能商品化与平台化趋势明显：multica-ai、multica-ai/multica、adlyosmani/agent-skills等项目将技能打包为可管理资产，预示未来可能出现技能交易平台",
+    "隐私优先的本地AI助手需求激增：openhuman（+11,571星，Rust实现）和tinyhumansai/openhuman强调私有、个人强大AI，反映用户对数据主权的重视",
+    "GitHub星数通胀与社区裂变：一周内多项目增长超1万星，部分项目（如mattpocock/skills、obra/superpowers）出现重复上榜，表明同一团队或影响力个体能快速拉动多个关联项目",
+    "AI金融工具的平民化创业信号：FinceptTerminal（+18,300星）和TradingAgents（+25,690星）同时爆发，非机构开发者对复杂金融分析工具的可获得性要求正在推动新品类诞生"
+  ],
+  "metadata": {
+    "projects_count": 100,
+    "analyzed_at": "2026-05-25T10:54:41.697910+00:00",
+    "collection": "hotspot_2026_05_18",
+    "model": "deepseek-v4-pro"
+  }
+}
