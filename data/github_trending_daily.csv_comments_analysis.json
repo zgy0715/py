@@ -1,0 +1,767 @@
+[
+  {
+    "repo": "oven-sh/bun",
+    "issues_count": 10,
+    "comments_count": 16,
+    "issue_sentiments": [
+      {
+        "title": "Please issue a CVE for HTTP Request Smuggling",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "lattwood"
+      },
+      {
+        "title": "Readable async iterator resolves instead of rejecting when `stream.destroy()` is called during iteration",
+        "sentiment": "neutral",
+        "score": -0.05000000000000002,
+        "user": "kevgeoleo"
+      },
+      {
+        "title": "Docs suggest HMR isn't supported",
+        "sentiment": "positive",
+        "score": 0.11999999999999997,
+        "user": "jakeg"
+      },
+      {
+        "title": "subtract with overflow panic in lexer on invalid unicode escape sequence",
+        "sentiment": "positive",
+        "score": 0.1409090909090909,
+        "user": "Benjins"
+      },
+      {
+        "title": "slice index range panic on string literal template",
+        "sentiment": "positive",
+        "score": 0.22777777777777783,
+        "user": "Benjins"
+      },
+      {
+        "title": "Cursor does not reset when pressing `Ctrl+C` during interactive update",
+        "sentiment": "neutral",
+        "score": -0.05,
+        "user": "gameroman"
+      },
+      {
+        "title": "`bun test --parallel` does not wait for async preload to finish",
+        "sentiment": "neutral",
+        "score": -0.016666666666666666,
+        "user": "tiagohm"
+      },
+      {
+        "title": "macOS: bun run rust:check fails with \"invalid linker name in argument '-fuse-ld=lld'\"",
+        "sentiment": "negative",
+        "score": -0.10384615384615385,
+        "user": "shguddn8591"
+      },
+      {
+        "title": "Rust BoundedArray methods are potentially unsound",
+        "sentiment": "neutral",
+        "score": -0.05357142857142857,
+        "user": "Lord-McSweeney"
+      },
+      {
+        "title": "freebsd + android targets aren't matched in install.sh",
+        "sentiment": "positive",
+        "score": 0.1375,
+        "user": "RiskyMH"
+      }
+    ],
+    "comment_sentiments": [
+      {
+        "body": "✅ Reproduced and fixed — `for await` on a `fs.createReadStream` is pull-based, so an in-flight `fs.r...",
+        "sentiment": "neutral",
+        "score": 0.07999999999999999,
+        "user": "robobun"
+      },
+      {
+        "body": "✅ Docs fix in progress → #30912\n\nUpdates both outdated notes in `docs/runtime/watch-mode.mdx` to lin...",
+        "sentiment": "neutral",
+        "score": -0.07500000000000004,
+        "user": "robobun"
+      },
+      {
+        "body": "✅ Reproduced — panic at `src/js_parser/lexer.rs:803:41` on `\\x` followed by a multi-byte codepoint. ...",
+        "sentiment": "positive",
+        "score": 0.3666666666666667,
+        "user": "robobun"
+      },
+      {
+        "body": "Found 1 possible duplicate issue:\n\n1. https://github.com/oven-sh/bun/issues/30825\n\nThis issue will b...",
+        "sentiment": "neutral",
+        "score": -0.0625,
+        "user": "github-actions[bot]"
+      },
+      {
+        "body": "fyi, I also filed https://github.com/oven-sh/bun/issues/30825 and while they're similar, I do think ...",
+        "sentiment": "neutral",
+        "score": 0.06666666666666667,
+        "user": "Benjins"
+      },
+      {
+        "body": "✅ Reproduced — `<y/\\`\\`` panics at `src/js_parser/lexer.rs:3463` (`raw_template_contents` slice unde...",
+        "sentiment": "neutral",
+        "score": -0.1,
+        "user": "robobun"
+      },
+      {
+        "body": "Hi! I’d like to take a look at this and try submitting a fix.\n\nIt seems like `raw_template_contents(...",
+        "sentiment": "positive",
+        "score": 0.5,
+        "user": "minorcell"
+      },
+      {
+        "body": "Ah, I see robobun already has a fix in #30894. Looks good — thanks!",
+        "sentiment": "positive",
+        "score": 0.475,
+        "user": "minorcell"
+      },
+      {
+        "body": "✅ Reproduced and fixed — `bun update -i` set `ENABLE_PROCESSED_INPUT` on Windows, which made the con...",
+        "sentiment": "neutral",
+        "score": 0.0625,
+        "user": "robobun"
+      },
+      {
+        "body": "✅ Fix in #30888 (merged into the PR):\n- `has_tla` flag propagation in `RuntimeTranspilerStore.rs` (t...",
+        "sentiment": "positive",
+        "score": 0.125,
+        "user": "robobun"
+      },
+      {
+        "body": "✅ Confirmed the generated `.cargo/config.toml` force-sets `-fuse-ld=lld` on `[target.*-apple-darwin]...",
+        "sentiment": "positive",
+        "score": 0.26,
+        "user": "robobun"
+      },
+      {
+        "body": "✅ Fixed in #30864 — `resize` is shrink-only, `unsafe fn set_len_unchecked` is the explicit growth pr...",
+        "sentiment": "neutral",
+        "score": 0.1,
+        "user": "robobun"
+      },
+      {
+        "body": "@robobun can it be fixed downstream without making it unsafe?",
+        "sentiment": "neutral",
+        "score": 0.1,
+        "user": "aqeelat"
+      },
+      {
+        "body": "✅ FreeBSD (`freebsd-x64` / `freebsd-aarch64`) and Android/Termux (`linux-x64-android` / `linux-aarch...",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "robobun"
+      },
+      {
+        "body": "Found 1 possible duplicate issue:\n\n1. https://github.com/oven-sh/bun/issues/5085\n\nThis issue will be...",
+        "sentiment": "neutral",
+        "score": -0.0625,
+        "user": "github-actions[bot]"
+      },
+      {
+        "body": "@RiskyMH @robobun I'd like to add one important detail. Termux ≠ Android target. Proper Android bina...",
+        "sentiment": "positive",
+        "score": 0.2,
+        "user": "iMrDJAi"
+      }
+    ],
+    "users": {
+      "lattwood": {
+        "login": "lattwood",
+        "name": "Logan Attwood",
+        "company": null,
+        "location": "Halifax, NS",
+        "followers": 34,
+        "following": 30,
+        "public_repos": 117,
+        "created_at": "2013-12-16T17:05:09Z"
+      },
+      "kevgeoleo": {
+        "login": "kevgeoleo",
+        "name": "Kevin George Leo",
+        "company": "CISPA Helmholtz Center for Information Security",
+        "location": "Saarbrücken, Germany",
+        "followers": 4,
+        "following": 10,
+        "public_repos": 10,
+        "created_at": "2019-02-20T08:36:20Z"
+      },
+      "jakeg": {
+        "login": "jakeg",
+        "name": "Jake Gordon",
+        "company": null,
+        "location": "Cambridge, UK",
+        "followers": 51,
+        "following": 42,
+        "public_repos": 30,
+        "created_at": "2011-04-21T22:23:24Z"
+      },
+      "Benjins": {
+        "login": "Benjins",
+        "name": "Benji Smith",
+        "company": null,
+        "location": null,
+        "followers": 8,
+        "following": 0,
+        "public_repos": 48,
+        "created_at": "2013-12-16T00:57:49Z"
+      },
+      "gameroman": {
+        "login": "gameroman",
+        "name": "Roman",
+        "company": "@rmandotdev",
+        "location": null,
+        "followers": 35,
+        "following": 604,
+        "public_repos": 117,
+        "created_at": "2022-12-23T19:06:23Z"
+      },
+      "tiagohm": {
+        "login": "tiagohm",
+        "name": "Tiago",
+        "company": null,
+        "location": "Itajubá - MG, Brazil",
+        "followers": 59,
+        "following": 0,
+        "public_repos": 31,
+        "created_at": "2015-12-31T01:27:41Z"
+      },
+      "shguddn8591": {
+        "login": "shguddn8591",
+        "name": "노형우",
+        "company": null,
+        "location": null,
+        "followers": 2,
+        "following": 2,
+        "public_repos": 10,
+        "created_at": "2021-03-09T14:59:23Z"
+      },
+      "Lord-McSweeney": {
+        "login": "Lord-McSweeney",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 17,
+        "following": 4,
+        "public_repos": 14,
+        "created_at": "2021-05-22T14:54:27Z"
+      },
+      "RiskyMH": {
+        "login": "RiskyMH",
+        "name": "Michael H",
+        "company": "previously @oven-sh (bun)",
+        "location": "🇦🇺 Kangaroo Land",
+        "followers": 145,
+        "following": 15,
+        "public_repos": 22,
+        "created_at": "2019-10-06T05:35:38Z"
+      },
+      "robobun": {
+        "login": "robobun",
+        "name": "robobun",
+        "company": "@oven-sh",
+        "location": "San Francisco, CA",
+        "followers": 106,
+        "following": 1,
+        "public_repos": 11,
+        "created_at": "2022-11-04T19:40:24Z"
+      },
+      "github-actions[bot]": {
+        "login": "github-actions[bot]",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 0,
+        "created_at": "2018-07-30T09:30:16Z"
+      },
+      "minorcell": {
+        "login": "minorcell",
+        "name": "mcell",
+        "company": "Qiniu Cloud",
+        "location": null,
+        "followers": 24,
+        "following": 5,
+        "public_repos": 54,
+        "created_at": "2022-12-17T14:15:32Z"
+      },
+      "aqeelat": {
+        "login": "aqeelat",
+        "name": "Abdullah Alaqeel",
+        "company": null,
+        "location": "Dammam, Saudi Arabia",
+        "followers": 66,
+        "following": 9,
+        "public_repos": 54,
+        "created_at": "2013-08-12T10:16:00Z"
+      },
+      "iMrDJAi": {
+        "login": "iMrDJAi",
+        "name": "${Mr.DJA}",
+        "company": null,
+        "location": null,
+        "followers": 123,
+        "following": 31,
+        "public_repos": 44,
+        "created_at": "2018-08-11T20:44:28Z"
+      }
+    }
+  },
+  {
+    "repo": "K-Dense-AI/scientific-agent-skills",
+    "issues_count": 8,
+    "comments_count": 6,
+    "issue_sentiments": [
+      {
+        "title": "please support for opencode agent to use scientific-agent-skills",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "VinceChenRD"
+      },
+      {
+        "title": "Scan does not fail when Trivy returns exit code 0 with vulnerabilities",
+        "sentiment": "negative",
+        "score": -0.11410256410256411,
+        "user": "saiganesh47"
+      },
+      {
+        "title": "research-lookup: invalid YAML frontmatter — unquoted 'Note:' breaks description parsing (introduced in PR #149)",
+        "sentiment": "neutral",
+        "score": 0.07691387559808613,
+        "user": "lyr1cs"
+      },
+      {
+        "title": "feat: Add gh skill support for one-line skill installation via GitHub CLI",
+        "sentiment": "positive",
+        "score": 0.15658369408369407,
+        "user": "sanoakr"
+      },
+      {
+        "title": "Feature Request: Support and Skills for Social Sciences, Arts, and Musicology",
+        "sentiment": "positive",
+        "score": 0.16984848484848486,
+        "user": "neseliispanak"
+      },
+      {
+        "title": "Add git-annex (and/or datalad) skill",
+        "sentiment": "positive",
+        "score": 0.1659090909090909,
+        "user": "yarikoptic"
+      },
+      {
+        "title": "bug(research-grants): 7 referenced files missing from references/ directory",
+        "sentiment": "neutral",
+        "score": -0.032692307692307694,
+        "user": "robotlearning123"
+      },
+      {
+        "title": "feat: QTL Analysis Skill - Open Source Alternative to QTLmax",
+        "sentiment": "neutral",
+        "score": 0.05238095238095238,
+        "user": "borealBytes"
+      }
+    ],
+    "comment_sentiments": [
+      {
+        "body": "Submitted in https://github.com/K-Dense-AI/scientific-agent-skills/pull/164 - quotes the description...",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "mvanhorn"
+      },
+      {
+        "body": "```\n$ gh skill install K-Dense-AI/scientific-agent-skills\nUsing ref v2.38.0 (75c41d78)\nno skills fou...",
+        "sentiment": "neutral",
+        "score": -0.1,
+        "user": "kratsg"
+      },
+      {
+        "body": "We would love to expand. If you suggest some clear capabilities that can be defined as Skills we'll ...",
+        "sentiment": "positive",
+        "score": 0.4666666666666666,
+        "user": "TKassis"
+      },
+      {
+        "body": "> We would love to expand. If you suggest some clear capabilities that can be defined as Skills we'l...",
+        "sentiment": "positive",
+        "score": 0.15164835164835164,
+        "user": "neseliispanak"
+      },
+      {
+        "body": "@TKassis ?",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "neseliispanak"
+      },
+      {
+        "body": "closing due to issue spam",
+        "sentiment": "negative",
+        "score": -0.125,
+        "user": "rekram1-node"
+      }
+    ],
+    "users": {
+      "VinceChenRD": {
+        "login": "VinceChenRD",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 1,
+        "following": 0,
+        "public_repos": 0,
+        "created_at": "2024-09-29T09:20:23Z"
+      },
+      "saiganesh47": {
+        "login": "saiganesh47",
+        "name": "Sai Ganesh",
+        "company": null,
+        "location": "Hyderabad",
+        "followers": 37,
+        "following": 104,
+        "public_repos": 55,
+        "created_at": "2024-07-28T13:24:44Z"
+      },
+      "lyr1cs": {
+        "login": "lyr1cs",
+        "name": "Eric Lee",
+        "company": null,
+        "location": null,
+        "followers": 2,
+        "following": 19,
+        "public_repos": 44,
+        "created_at": "2018-09-04T13:04:24Z"
+      },
+      "sanoakr": {
+        "login": "sanoakr",
+        "name": "佐野 彰 / SANO Akira",
+        "company": null,
+        "location": null,
+        "followers": 6,
+        "following": 0,
+        "public_repos": 30,
+        "created_at": "2014-11-18T02:29:56Z"
+      },
+      "neseliispanak": {
+        "login": "neseliispanak",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 5,
+        "public_repos": 0,
+        "created_at": "2023-10-04T09:03:50Z"
+      },
+      "yarikoptic": {
+        "login": "yarikoptic",
+        "name": "Yaroslav Halchenko",
+        "company": "Dartmouth College, @dandi, @Debian, @DataLad, @neurodebian, @PyMVPA, @fail2ban",
+        "location": "Planet Earth",
+        "followers": 505,
+        "following": 27,
+        "public_repos": 1391,
+        "created_at": "2008-12-11T18:51:38Z"
+      },
+      "robotlearning123": {
+        "login": "robotlearning123",
+        "name": "Cong",
+        "company": "MGH · Harvard University",
+        "location": "Boston, MA",
+        "followers": 272,
+        "following": 838,
+        "public_repos": 34,
+        "created_at": "2014-04-23T06:04:34Z"
+      },
+      "borealBytes": {
+        "login": "borealBytes",
+        "name": "Clayton Young",
+        "company": "Superior Byte Works, LLC",
+        "location": "Pelkie, MI",
+        "followers": 30,
+        "following": 7,
+        "public_repos": 94,
+        "created_at": "2025-04-07T00:38:18Z"
+      },
+      "mvanhorn": {
+        "login": "mvanhorn",
+        "name": "Matt Van Horn",
+        "company": null,
+        "location": null,
+        "followers": 1773,
+        "following": 5,
+        "public_repos": 1017,
+        "created_at": "2010-10-26T19:09:59Z"
+      },
+      "kratsg": {
+        "login": "kratsg",
+        "name": "Giordon Stark",
+        "company": "SCIPP, University of California, Santa Cruz",
+        "location": null,
+        "followers": 116,
+        "following": 54,
+        "public_repos": 183,
+        "created_at": "2011-05-01T05:03:30Z"
+      },
+      "TKassis": {
+        "login": "TKassis",
+        "name": "Timothy Kassis",
+        "company": "@K-Dense-AI ",
+        "location": "Palo Alto, CA",
+        "followers": 286,
+        "following": 4,
+        "public_repos": 4,
+        "created_at": "2014-10-12T21:05:14Z"
+      },
+      "rekram1-node": {
+        "login": "rekram1-node",
+        "name": "Aiden Cline",
+        "company": "@Anomalyco",
+        "location": "Austin, TX ",
+        "followers": 540,
+        "following": 31,
+        "public_repos": 48,
+        "created_at": "2020-04-01T22:20:19Z"
+      }
+    }
+  },
+  {
+    "repo": "obra/superpowers",
+    "issues_count": 10,
+    "comments_count": 7,
+    "issue_sentiments": [
+      {
+        "title": "Superpowers workflows skew Gemini CLI model routing toward Flash and Flash Lite.",
+        "sentiment": "neutral",
+        "score": -0.027976190476190477,
+        "user": "meyverick"
+      },
+      {
+        "title": "Add lifecycle extension system for user-defined workflow hooks",
+        "sentiment": "positive",
+        "score": 0.11172619047619047,
+        "user": "jhochenbaum"
+      },
+      {
+        "title": "[plugin] SessionStart hook needs timeout, descriptions are uniform, one skill is large",
+        "sentiment": "neutral",
+        "score": -0.06035714285714287,
+        "user": "jeandeloynes-prog"
+      },
+      {
+        "title": "[plugin] SessionStart hook needs timeout, descriptions are uniform, one skill is large",
+        "sentiment": "positive",
+        "score": 0.21428571428571427,
+        "user": "jeandeloynes-prog"
+      },
+      {
+        "title": "Feature Request: Add iterative brainstorming skill to support multiple independent runs and integrate requirement documents",
+        "sentiment": "neutral",
+        "score": 0.09417027417027417,
+        "user": "keepsmile79"
+      },
+      {
+        "title": "SessionStart hook error on Windows: node:internal/modules/cjs/loader:1423 (non-blocking)",
+        "sentiment": "neutral",
+        "score": 0.07006802721088436,
+        "user": "flupkede"
+      },
+      {
+        "title": "Add .gitkeep to docs/superpowers/specs/done/ and docs/superpowers/plans/done/",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "BR4096"
+      },
+      {
+        "title": "Step 1a (EnterWorktree preference) triggers Claude Code #58345 / #45201 — silent repo corruption on first worktree invocation",
+        "sentiment": "neutral",
+        "score": -0.04017857142857144,
+        "user": "j7an"
+      },
+      {
+        "title": "executing-plans: STOP triggers cause silent multi-hour stalls; need to harmonize with subagent-driven-development's Continuous execution rule",
+        "sentiment": "neutral",
+        "score": -0.005677430677430675,
+        "user": "WingsOfPanda"
+      },
+      {
+        "title": "subagent-driven-development: subagents can detach HEAD with bare `git checkout <sha>`, silently orphaning subsequent commits",
+        "sentiment": "neutral",
+        "score": 0.07354497354497355,
+        "user": "Gigman2"
+      }
+    ],
+    "comment_sentiments": [
+      {
+        "body": "Night out in the house\r\n\r\nOn Sun, 17 May 2026, 3:00 am Jordan Hochenbaum, ***@***.***>\r\nwrote:\r\n\r\n> ...",
+        "sentiment": "positive",
+        "score": 0.16520562770562772,
+        "user": "lligirlburg-wq"
+      },
+      {
+        "body": "🎉\r\n\r\nLigirlburg reacted via Gmail\r\n<https://www.google.com/gmail/about/?utm_source=gmail-in-product&...",
+        "sentiment": "positive",
+        "score": 0.11902709359605909,
+        "user": "lligirlburg-wq"
+      },
+      {
+        "body": "What are you doing\r\n\r\nOn Sat, 16 May 2026, 1:22 pm jeandeloynes-prog, ***@***.***>\r\nwrote:\r\n\r\n> *jea...",
+        "sentiment": "neutral",
+        "score": -0.014610389610389603,
+        "user": "lligirlburg-wq"
+      },
+      {
+        "body": "Cross-linking anthropics/claude-code#59072 (filed yesterday) - paired-machine repro showing this is ...",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "mvanhorn"
+      },
+      {
+        "body": "Yikes. That's not great.",
+        "sentiment": "negative",
+        "score": -0.4,
+        "user": "obra"
+      },
+      {
+        "body": "Has this happened more than once? Next time it happens, can you ask the agent why it left the repo i...",
+        "sentiment": "positive",
+        "score": 0.33999999999999997,
+        "user": "obra"
+      },
+      {
+        "body": "> Has this happened more than once? Next time it happens, can you ask the agent why it left the repo...",
+        "sentiment": "positive",
+        "score": 0.33999999999999997,
+        "user": "qjbtj999"
+      }
+    ],
+    "users": {
+      "meyverick": {
+        "login": "meyverick",
+        "name": "Meyverick",
+        "company": null,
+        "location": null,
+        "followers": 3,
+        "following": 2,
+        "public_repos": 4,
+        "created_at": "2022-03-18T13:25:07Z"
+      },
+      "jhochenbaum": {
+        "login": "jhochenbaum",
+        "name": "Jordan Hochenbaum",
+        "company": null,
+        "location": "United States",
+        "followers": 28,
+        "following": 1,
+        "public_repos": 15,
+        "created_at": "2011-07-11T16:51:21Z"
+      },
+      "jeandeloynes-prog": {
+        "login": "jeandeloynes-prog",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 1,
+        "created_at": "2025-08-28T12:27:19Z"
+      },
+      "keepsmile79": {
+        "login": "keepsmile79",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 0,
+        "created_at": "2026-04-01T08:59:42Z"
+      },
+      "flupkede": {
+        "login": "flupkede",
+        "name": "Filip Develter",
+        "company": null,
+        "location": "Belgium",
+        "followers": 1,
+        "following": 0,
+        "public_repos": 3,
+        "created_at": "2014-12-09T18:56:23Z"
+      },
+      "BR4096": {
+        "login": "BR4096",
+        "name": "br4096",
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 10,
+        "created_at": "2016-03-31T15:36:00Z"
+      },
+      "j7an": {
+        "login": "j7an",
+        "name": "Jia \"Jay\" Tan",
+        "company": null,
+        "location": "Las Vegas",
+        "followers": 31,
+        "following": 52,
+        "public_repos": 49,
+        "created_at": "2015-03-20T06:55:43Z"
+      },
+      "WingsOfPanda": {
+        "login": "WingsOfPanda",
+        "name": "wingsofpanda",
+        "company": null,
+        "location": null,
+        "followers": 6,
+        "following": 1,
+        "public_repos": 56,
+        "created_at": "2019-01-21T10:12:56Z"
+      },
+      "Gigman2": {
+        "login": "Gigman2",
+        "name": "Gigman",
+        "company": "@Complete-Farmer @uppsel ",
+        "location": "Accra, Ghana",
+        "followers": 5,
+        "following": 11,
+        "public_repos": 7,
+        "created_at": "2021-06-24T09:18:11Z"
+      },
+      "lligirlburg-wq": {
+        "login": "lligirlburg-wq",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 50,
+        "public_repos": 0,
+        "created_at": "2026-01-26T09:02:03Z"
+      },
+      "mvanhorn": {
+        "login": "mvanhorn",
+        "name": "Matt Van Horn",
+        "company": null,
+        "location": null,
+        "followers": 1773,
+        "following": 5,
+        "public_repos": 1017,
+        "created_at": "2010-10-26T19:09:59Z"
+      },
+      "obra": {
+        "login": "obra",
+        "name": "Jesse Vincent",
+        "company": "Prime Radiant",
+        "location": "Berkeley, CA 94703",
+        "followers": 5910,
+        "following": 93,
+        "public_repos": 212,
+        "created_at": "2009-01-09T20:24:15Z"
+      },
+      "qjbtj999": {
+        "login": "qjbtj999",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 1,
+        "public_repos": 23,
+        "created_at": "2013-04-16T08:12:45Z"
+      }
+    }
+  }
+]

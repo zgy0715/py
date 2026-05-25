@@ -1,0 +1,18 @@
+# ============================================================
+# Tech Hotspot Crawler — Dependencies
+# Install: pip install -r requirements.txt
+# ============================================================
+
+scrapy>=2.11.0
+
+# 动态 User-Agent（可选，未安装时自动使用内置 UA 列表）
+scrapy-fake-useragent>=1.4.0
+
+# scrapy-redis：分布式调度 & 去重
+scrapy-redis>=0.7.0
+
+# Redis 客户端（Pipeline 中手动操作 ZSET / Hash）
+redis>=5.0.0
+
+# MongoDB 存储
+pymongo>=4.6.0
