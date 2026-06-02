@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech Hotspot · 技术热点可视化</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+  <style>
+    :root {
+      --bg: #F5F7FA;
+      --bg2: #FFFFFF;
+      --bg3: #F0F2F5;
+      --text: #1D2129;
+      --text2: #4E5969;
+      --text3: #86909C;
+      --primary: #165DFF;
+      --primary-light: #E8F3FF;
+      --green: #00B42A;
+      --red: #F53F3F;
+      --orange: #FF7D00;
+      --purple: #722ED1;
+      --cyan: #0FC6C2;
+      --border: #E5E6EB;
+      --radius: 10px;
+      --radius-sm: 6px;
+      --shadow: 0 1px 4px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+      --transition-fast: 150ms ease;
+      --transition-normal: 250ms ease;
+    }
+    .dark-theme {
+      --bg: #1A1A2E;
+      --bg2: #16213E;
+      --bg3: #0F3460;
+      --text: #E0E0E0;
+      --text2: #B0B0B0;
+      --text3: #808080;
+      --primary: #64B5F6;
+      --primary-light: rgba(100,181,246,0.15);
+      --border: #333344;
+      --shadow: 0 1px 4px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+      background: var(--bg); color: var(--text);
+      overflow: hidden; height: 100vh;
+      transition: background-color var(--transition-normal), color var(--transition-normal);
+    }
+    ::-webkit-scrollbar { width:5px; }
+    ::-webkit-scrollbar-thumb { background: #C9CDD4; border-radius:3px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    .app { display:flex; flex-direction:column; height:100vh; }
+    .header {
+      height:52px; display:flex; align-items:center; gap:16px;
+      padding:0 20px; background:var(--bg2);
+      border-bottom:1px solid var(--border); z-index:100;
+      transition: all var(--transition-normal);
+    }
+    .logo { font-size:15px; font-weight:700; color:var(--primary); min-width:160px; display:flex; align-items:center; gap:8px; }
+    .logo small { color:var(--text3); font-weight:400; font-size:11px; margin-left:6px; }
+    .nav { display:flex; gap:2px; flex:1; justify-content:center; }
+    .nav-item {
+      padding:7px 16px; border-radius:var(--radius-sm); font-size:13px; font-weight:500;
+      color:var(--text2); cursor:pointer; border:none; background:transparent;
+      transition:all .2s; position:relative;
+    }
+    .nav-item:hover { background:var(--primary-light); color:var(--primary); }
+    .nav-item.active { background:var(--primary); color:#fff; }
+    .header-actions { display:flex; gap:8px; align-items:center; flex-shrink:0; }
+    .search-box { position:relative; width:220px; }
+    .search-box input {
+      width:100%; padding:6px 14px 6px 36px; border:1px solid var(--border);
+      border-radius:var(--radius-sm); font-size:13px; background:var(--bg);
+      color:var(--text); outline:none; transition:all var(--transition-fast);
+    }
+    .search-box input:focus { border-color:var(--primary); box-shadow:0 0 0 3px rgba(22,93,255,0.1); }
+    .search-icon { position:absolute; left:10px; top:50%; transform:translateY(-50%); color:var(--text3); pointer-events:none; }
+    .search-results {
+      position:absolute; top:100%; left:0; right:0; margin-top:4px;
+      background:var(--bg2); border:1px solid var(--border); border-top:none;
+      border-radius:0 0 var(--radius-sm) var(--radius-sm);
+      box-shadow:var(--shadow-md); z-index:200; max-height:300px;
+      overflow-y:auto; display:none;
+    }
+    .search-results.active { display:block; }
+    .search-result-item {
+      display:flex; align-items:center; gap:8px; padding:8px 12px;
+      cursor:pointer; transition:background var(--transition-fast); font-size:13px;
+    }
+    .search-result-item:hover { background:var(--primary-light); color:var(--primary); }
+    .btn-export {
+      padding:5px 12px; border-radius:var(--radius-sm); font-size:12px; font-weight:500;
+      cursor:pointer; border:1px solid var(--border); background:var(--bg2); color:var(--text2);
+      transition:all .2s; display:flex; align-items:center; gap:4px;
+    }
+    .btn-export:hover { border-color:var(--primary); color:var(--primary); }
+    .btn-export svg { width:14px; height:14px; }
+    .theme-toggle-btn {
+      width:36px; height:36px; display:flex; align-items:center; justify-content:center;
+      border-radius:var(--radius-sm); background:transparent; color:var(--text2);
+      cursor:pointer; border:1px solid var(--border); transition:all var(--transition-fast);
+    }
+    .theme-toggle-btn:hover { background:var(--primary-light); color:var(--primary); border-color:var(--primary); }
+    .theme-toggle-btn svg { width:18px; height:18px; }
+    .theme-toggle-btn .sun-icon { display:block; }
+    .theme-toggle-btn .moon-icon { display:none; }
+    .dark-theme .theme-toggle-btn .sun-icon { display:none; }
+    .dark-theme .theme-toggle-btn .moon-icon { display:block; }
+    .main { display:flex; flex:1; overflow:hidden; }
+    .sidebar {
+      width:220px; min-width:220px; background:var(--bg2);
+      border-right:1px solid var(--border); display:flex; flex-direction:column;
+      overflow-y:auto; transition:all var(--transition-normal);
+    }
+    .sidebar-section { padding:14px; border-bottom:1px solid var(--border); }
+    .section-title { font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:var(--text3); margin-bottom:10px; padding-left:4px; }
+    .category-item {
+      width:100%; display:flex; align-items:center; gap:8px;
+      padding:8px 12px; border-radius:var(--radius-sm); background:transparent;
+      color:var(--text2); font-size:13px; cursor:pointer; border:none;
+      text-align:left; transition:all var(--transition-fast);
+    }
+    .category-item:hover { background:var(--primary-light); }
+    .category-item.active { background:rgba(22,93,255,0.15); color:var(--primary); }
+    .category-item svg { width:18px; height:18px; flex-shrink:0; }
+    .sub-tabs { display:flex; flex-direction:column; gap:4px; }
+    .sub-tab {
+      width:100%; display:flex; align-items:center; justify-content:space-between;
+      padding:8px 12px; font-size:13px; color:var(--text2); background:transparent;
+      border:none; border-left:3px solid transparent; cursor:pointer;
+      text-align:left; transition:all var(--transition-fast);
+    }
+    .sub-tab:hover { background:rgba(22,93,255,0.05); }
+    .sub-tab.active { background:rgba(22,93,255,0.08); color:var(--primary); border-left-color:var(--primary); }
+    .chart-type-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:6px; padding:4px 0; }
+    .chart-type-btn {
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:4px; padding:10px 4px; border-radius:var(--radius-sm); background:transparent;
+      color:var(--text2); cursor:pointer; border:none; transition:all var(--transition-fast);
+    }
+    .chart-type-btn:hover { background:var(--primary-light); }
+    .chart-type-btn.active { background:rgba(22,93,255,0.15); color:var(--primary); }
+    .chart-type-btn svg { width:18px; height:18px; }
+    .chart-type-btn span { font-size:11px; font-weight:500; text-align:center; }
+    .content-area { flex:1; display:flex; overflow:hidden; }
+    .content { flex:1; padding:16px; overflow-y:auto; }
+    .right-panel {
+      width:280px; min-width:280px; background:var(--bg2);
+      border-left:1px solid var(--border); overflow-y:auto;
+      transition:all var(--transition-normal);
+    }
+    .panel-section { padding:14px; border-bottom:1px solid var(--border); }
+    .panel-title { font-size:13px; font-weight:600; color:var(--text2); margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+    .panel-title svg { width:16px; height:16px; }
+    .kpi-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
+    .kpi-card {
+      background:var(--bg); border-radius:var(--radius-sm); padding:12px;
+      box-shadow:var(--shadow); position:relative; overflow:hidden;
+      transition:all var(--transition-normal); cursor:default;
+    }
+    .kpi-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--green); }
+    .kpi-card:hover { transform:translateY(-2px); box-shadow:var(--shadow-md); }
+    .kpi-label { font-size:11px; color:var(--text3); }
+    .kpi-value { font-size:20px; font-weight:700; color:var(--text); margin:4px 0; }
+    .stat-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--border); }
+    .stat-label { font-size:12px; color:var(--text3); }
+    .stat-value { font-size:12px; font-weight:600; }
+    .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .grid-2 { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+    .card {
+      background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius);
+      padding:16px; transition:all .2s; box-shadow:var(--shadow);
+    }
+    .card:hover { box-shadow:0 2px 12px rgba(0,0,0,0.08); }
+    .card-title { font-size:12px; color:var(--text3); font-weight:500; margin-bottom:8px; }
+    .card-value { font-size:22px; font-weight:700; color:var(--text); }
+    .card-label { font-size:11px; color:var(--text3); margin-top:4px; }
+    .section { margin-bottom:20px; }
+    .section-title { font-size:15px; font-weight:600; margin-bottom:12px; color:var(--text); }
+    table { width:100%; border-collapse:collapse; font-size:12px; }
+    th { text-align:left; padding:10px 12px; color:var(--text3); font-weight:500; border-bottom:1px solid var(--border); background:var(--bg3); }
+    td { padding:10px 12px; border-bottom:1px solid #F2F3F5; color:var(--text2); }
+    tr:hover td { background:var(--primary-light); }
+    .chart-box { height:400px; width:100%; }
+    .tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:11px; background:var(--primary-light); color:var(--primary); margin:1px; }
+    .tag-green { background:#E8FFEA; color:var(--green); }
+    .tag-orange { background:#FFF7E8; color:var(--orange); }
+    .tag-purple { background:#F5E8FF; color:var(--purple); }
+    .tag-cyan { background:#E8FFFB; color:var(--cyan); }
+    .view { display:none; }
+    .view.active { display:block; }
+    .sub-tabs-horizontal { display:flex; gap:4px; margin-bottom:12px; flex-wrap:wrap; }
+    .sub-tab-h {
+      padding:5px 14px; border-radius:var(--radius-sm); font-size:12px; font-weight:500;
+      color:var(--text2); cursor:pointer; border:1px solid var(--border); background:var(--bg2);
+      transition:all .2s;
+    }
+    .sub-tab-h:hover { border-color:var(--primary); color:var(--primary); }
+    .sub-tab-h.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+    .metric-row { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
+    .metric-btn {
+      padding:5px 12px; border-radius:var(--radius-sm); font-size:12px; font-weight:500;
+      color:var(--text2); cursor:pointer; border:1px solid var(--border); background:var(--bg2);
+      transition:all .2s;
+    }
+    .metric-btn:hover { border-color:var(--primary); color:var(--primary); }
+    .metric-btn.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+    .chart-type-btn-inline {
+      padding:4px 10px; border-radius:var(--radius-sm); font-size:11px; font-weight:500;
+      color:var(--text2); cursor:pointer; border:1px solid var(--border); background:var(--bg2);
+      transition:all .2s; display:flex; align-items:center; gap:3px;
+    }
+    .chart-type-btn-inline:hover { border-color:var(--primary); color:var(--primary); }
+    .chart-type-btn-inline.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+    .chart-type-btn-inline svg { width:12px; height:12px; }
+    .top-bar { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px; }
+    .range-selector { display:flex; align-items:center; gap:8px; margin-top:8px; padding:8px 12px; background:rgba(22,93,255,0.05); border-radius:var(--radius-sm); }
+    .range-label { font-size:12px; color:var(--text2); font-weight:500; }
+    .range-btn {
+      padding:4px 12px; border:none; border-radius:6px; background:transparent;
+      color:var(--text2); font-size:12px; cursor:pointer; transition:all 0.3s ease;
+    }
+    .range-btn:hover { background:rgba(22,93,255,0.1); color:var(--primary); }
+    .range-btn.active { background:var(--primary); color:white; font-weight:500; }
+    .ms-source-card { border-left:3px solid var(--primary); padding:12px 16px; }
+    .ms-source-card.src-hn { border-left-color:var(--orange); }
+    .ms-source-card.src-arxiv { border-left-color:var(--red); }
+    .ms-source-card.src-reddit { border-left-color:var(--cyan); }
+    .ms-source-card.src-github { border-left-color:var(--primary); }
+    .export-dropdown { position:relative; display:inline-block; }
+    .export-menu {
+      display:none; position:absolute; right:0; top:100%; margin-top:4px;
+      background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius-sm);
+      box-shadow:0 4px 16px rgba(0,0,0,0.1); z-index:200; min-width:140px;
+    }
+    .export-menu.show { display:block; }
+    .export-menu-item { padding:8px 14px; font-size:13px; color:var(--text2); cursor:pointer; display:flex; align-items:center; gap:8px; }
+    .export-menu-item:hover { background:var(--primary-light); color:var(--primary); }
+    .source-badge { padding:4px 10px; font-size:11px; border-radius:9999px; background:transparent; color:var(--primary); border:1px solid var(--primary); transition:all var(--transition-fast); }
+    .source-badge:hover { background:var(--primary-light); }
+    .comparison-container { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .comparison-chart h4 { font-size:13px; color:var(--text2); margin-bottom:8px; font-weight:500; }
+    .insight-section { margin-bottom:20px; }
+    .insight-section-title { font-size:14px; font-weight:600; color:var(--text); margin-bottom:12px; }
+    .insight-row { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .insight-row-2 { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+    .insight-card {
+      background:var(--bg); border-radius:var(--radius-sm); padding:16px;
+      border-left:3px solid var(--primary); transition:all var(--transition-normal);
+    }
+    .insight-card:hover { transform:translateY(-2px); box-shadow:var(--shadow-md); }
+    .insight-title { font-size:13px; font-weight:600; color:var(--text); margin-bottom:8px; }
+    .insight-content { font-size:12px; color:var(--text2); line-height:1.6; }
+    .insight-meta { display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; }
+    .insight-tag { padding:2px 8px; border-radius:4px; font-size:10px; background:var(--primary-light); color:var(--primary); }
+    .ai-kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px; }
+    .ai-kpi-card {
+      background:var(--bg2); border-radius:var(--radius); padding:16px 18px;
+      border:1px solid var(--border); transition:all var(--transition-normal);
+      position:relative; overflow:hidden;
+    }
+    .ai-kpi-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      border-radius:var(--radius) var(--radius) 0 0;
+    }
+    .ai-kpi-card:nth-child(1)::before { background:var(--primary); }
+    .ai-kpi-card:nth-child(2)::before { background:var(--green); }
+    .ai-kpi-card:nth-child(3)::before { background:var(--purple); }
+    .ai-kpi-card:nth-child(4)::before { background:var(--orange); }
+    .ai-kpi-card:hover { transform:translateY(-2px); box-shadow:var(--shadow-md); }
+    .ai-kpi-icon { font-size:20px; margin-bottom:8px; }
+    .ai-kpi-label { font-size:11px; color:var(--text3); margin-bottom:4px; }
+    .ai-kpi-value { font-size:14px; font-weight:700; color:var(--text); }
+    .ai-kpi-sub { font-size:11px; color:var(--text3); margin-top:4px; }
+    .ai-two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+    .ai-section-card {
+      background:var(--bg2); border-radius:var(--radius); border:1px solid var(--border);
+      overflow:hidden; transition:all var(--transition-normal);
+    }
+    .ai-section-card:hover { box-shadow:var(--shadow-md); }
+    .ai-section-header {
+      padding:12px 16px; display:flex; align-items:center; gap:8px;
+      border-bottom:1px solid var(--border); font-size:13px; font-weight:600;
+    }
+    .ai-section-header.trend-header { background:linear-gradient(135deg,rgba(22,93,255,0.06),rgba(22,93,255,0.02)); color:var(--primary); }
+    .ai-section-header.project-header { background:linear-gradient(135deg,rgba(0,180,42,0.06),rgba(0,180,42,0.02)); color:var(--green); }
+    .ai-section-header.path-header { background:linear-gradient(135deg,rgba(114,46,209,0.06),rgba(114,46,209,0.02)); color:var(--purple); }
+    .ai-section-header.signal-header { background:linear-gradient(135deg,rgba(255,125,0,0.06),rgba(255,125,0,0.02)); color:var(--orange); }
+    .ai-section-body { padding:4px 0; }
+    .ai-item-card {
+      padding:12px 16px; border-left:3px solid transparent;
+      transition:all var(--transition-fast); line-height:1.7;
+      border-bottom:1px solid var(--border); margin:0 8px;
+    }
+    .ai-item-card:last-child { border-bottom:none; }
+    .ai-item-card:hover { background:var(--bg); }
+    .ai-item-card.trend { border-left-color:var(--primary); }
+    .ai-item-card.project { border-left-color:var(--green); }
+    .ai-item-card.path { border-left-color:var(--purple); }
+    .ai-item-card.signal { border-left-color:var(--orange); }
+    .ai-item-index {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:18px; height:18px; border-radius:50%; font-size:10px; font-weight:700;
+      margin-right:8px; flex-shrink:0; vertical-align:middle;
+    }
+    .ai-item-card.trend .ai-item-index { background:var(--primary-light); color:var(--primary); }
+    .ai-item-card.project .ai-item-index { background:rgba(0,180,42,0.1); color:var(--green); }
+    .ai-item-card.path .ai-item-index { background:rgba(114,46,209,0.1); color:var(--purple); }
+    .ai-item-card.signal .ai-item-index { background:rgba(255,125,0,0.1); color:var(--orange); }
+    .ai-item-text { font-size:12.5px; color:var(--text2); }
+    .ai-item-text .ai-repo-tag {
+      display:inline-block; padding:1px 6px; border-radius:3px; font-size:11px;
+      font-weight:600; margin:0 2px; background:var(--primary-light); color:var(--primary);
+      text-decoration:none;
+    }
+    .ai-item-card.project .ai-repo-tag { background:rgba(0,180,42,0.1); color:var(--green); }
+    @media (max-width:1200px) { .ai-kpi-grid { grid-template-columns:repeat(2,1fr); } .ai-two-col { grid-template-columns:1fr; } }
+    .trend-tabs { display:flex; gap:4px; margin-bottom:12px; }
+    .trend-tab {
+      padding:6px 16px; border-radius:var(--radius-sm); font-size:12px; font-weight:500;
+      color:var(--text2); cursor:pointer; border:1px solid var(--border); background:var(--bg2);
+      transition:all .2s;
+    }
+    .trend-tab:hover { border-color:var(--primary); color:var(--primary); }
+    .trend-tab.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+    .quick-range-btn {
+      padding:6px 14px; border-radius:var(--radius-sm); font-size:12px; font-weight:500;
+      color:var(--text2); cursor:pointer; border:1px solid var(--border); background:var(--bg2);
+      transition:all .2s;
+    }
+    .quick-range-btn:hover { border-color:var(--primary); color:var(--primary); }
+    .quick-range-btn.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+    @media (max-width:1200px) { .sidebar { display:none; } .right-panel { display:none; } .grid-4 { grid-template-columns:repeat(2,1fr); } .grid-3 { grid-template-columns:repeat(2,1fr); } .comparison-container { grid-template-columns:1fr; } .insight-row { grid-template-columns:1fr; } .insight-row-2 { grid-template-columns:1fr; } }
+    @media (max-width:768px) { .header .nav { display:none; } .search-box { display:none; } }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <div class="logo">
+      <svg viewBox="0 0 32 32" fill="none" width="24" height="24"><rect width="32" height="32" rx="8" fill="#165DFF"/><path d="M8 16L12 20L24 8" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 24L12 20" stroke="white" stroke-width="3" stroke-linecap="round"/></svg>
+      Tech Hotspot <small>v2.2</small>
+    </div>
+    <div class="nav">
+      <button class="nav-item active" data-view="overview">数据概览</button>
+      <button class="nav-item" data-view="trend">趋势分析</button>
+      <button class="nav-item" data-view="compare">数据对比</button>
+      <button class="nav-item" data-view="multisource">多源对比</button>
+      <button class="nav-item" data-view="insight">洞察报告</button>
+      <button class="nav-item" data-view="ai-analysis">AI分析</button>
+    </div>
+    <div class="search-box">
+      <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search-input" placeholder="搜索项目...">
+      <div class="search-results" id="search-results"></div>
+    </div>
+    <div class="header-actions">
+      <div class="export-dropdown">
+        <button class="btn-export" id="btn-export-main">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          导出
+        </button>
+        <div class="export-menu" id="export-menu">
+          <div class="export-menu-item" data-format="csv">导出 CSV</div>
+          <div class="export-menu-item" data-format="json">导出 JSON</div>
+        </div>
+      </div>
+      <button class="theme-toggle-btn" id="theme-toggle-btn" title="切换主题">
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <div style="font-size:12px;color:var(--text3)" id="header-time"></div>
+    </div>
+  </header>
+
+  <div class="main">
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="section-title">数据源</div>
+        <button class="category-item active" data-source="github">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          GitHub Trending
+        </button>
+      </div>
+      <div class="sidebar-section">
+        <div class="section-title">时间范围</div>
+        <div class="sub-tabs" id="sidebar-range-tabs">
+          <button class="sub-tab active" data-range="daily">日榜</button>
+          <button class="sub-tab" data-range="weekly">周榜</button>
+          <button class="sub-tab" data-range="monthly">月榜</button>
+        </div>
+      </div>
+      <div class="sidebar-section" style="flex:1;">
+        <div class="section-title">图表类型</div>
+        <div class="chart-type-grid" id="sidebar-chart-types">
+          <button class="chart-type-btn active" data-chart="bar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="12" width="4" height="9"/><rect x="10" y="6" width="4" height="15"/><rect x="17" y="3" width="4" height="18"/></svg><span>柱状图</span></button>
+          <button class="chart-type-btn" data-chart="line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,8 14,14 10,10 6,16 2,12"/></svg><span>折线图</span></button>
+          <button class="chart-type-btn" data-chart="pie"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg><span>饼图</span></button>
+          <button class="chart-type-btn" data-chart="scatter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="15" r="2"/><circle cx="12" cy="9" r="2"/><circle cx="17" cy="17" r="2"/><circle cx="9" cy="5" r="2"/></svg><span>散点图</span></button>
+          <button class="chart-type-btn" data-chart="radar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 22,8.5 22,15.5 12,22 2,15.5 2,8.5"/><polygon points="12,6 17,9 17,15 12,18 7,15 7,9"/></svg><span>雷达图</span></button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="content-area">
+      <div class="content">
+
+      <!-- ===== 数据概览 ===== -->
+      <div class="view active" id="view-overview">
+        <div class="top-bar">
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+            <div class="metric-row" id="metric-selector" style="margin:0;">
+              <button class="metric-btn active" data-metric="stars">Stars</button>
+              <button class="metric-btn" data-metric="stars_since">日增长</button>
+              <button class="metric-btn" data-metric="forks">Forks</button>
+              <button class="metric-btn" data-metric="hot_score">热度分</button>
+            </div>
+          </div>
+          <div class="range-selector">
+            <span class="range-label">显示数量：</span>
+            <button class="range-btn" data-range-size="10">前10</button>
+            <button class="range-btn active" data-range-size="25">前25</button>
+            <button class="range-btn" data-range-size="50">前50</button>
+            <button class="range-btn" data-range-size="all">全部</button>
+          </div>
+        </div>
+        <div id="overview-kpi" class="grid-4" style="margin-bottom:12px"></div>
+        <div class="card">
+          <div class="top-bar">
+            <span style="font-size:14px;font-weight:600">Top 排行</span>
+            <div class="metric-row" style="margin:0" id="chart-type-btns">
+              <button class="chart-type-btn-inline active" data-chart="bar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="12" width="4" height="9"/><rect x="10" y="6" width="4" height="15"/><rect x="17" y="3" width="4" height="18"/></svg>柱状</button>
+              <button class="chart-type-btn-inline" data-chart="line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,8 14,14 10,10 6,16 2,12"/></svg>折线</button>
+              <button class="chart-type-btn-inline" data-chart="pie"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>饼图</button>
+              <button class="chart-type-btn-inline" data-chart="scatter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="15" r="2"/><circle cx="12" cy="9" r="2"/><circle cx="17" cy="17" r="2"/></svg>散点</button>
+              <button class="chart-type-btn-inline" data-chart="radar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 22,8.5 22,15.5 12,22 2,15.5 2,8.5"/></svg>雷达</button>
+            </div>
+          </div>
+          <div id="main-chart" class="chart-box"></div>
+        </div>
+        <div class="grid-2" style="margin-top:12px">
+          <div class="card"><div class="card-title">语言分布</div><div id="lang-chart" class="chart-box" style="height:320px"></div></div>
+          <div class="card"><div class="card-title">Stars vs Forks</div><div id="scatter-chart" class="chart-box" style="height:320px"></div></div>
+        </div>
+      </div>
+
+      <!-- ===== 趋势分析 ===== -->
+      <div class="view" id="view-trend">
+        <div class="card">
+          <div class="top-bar">
+            <div>
+              <div style="font-size:15px;font-weight:600">趋势分析</div>
+              <div style="font-size:12px;color:var(--text3);margin-top:2px">分析项目指标的变化趋势</div>
+            </div>
+          </div>
+          <div class="trend-tabs" id="trend-tabs">
+            <button class="trend-tab active" data-trend="stars">Stars 趋势</button>
+            <button class="trend-tab" data-trend="forks">Forks 趋势</button>
+            <button class="trend-tab" data-trend="growth">增长趋势</button>
+            <button class="trend-tab" data-trend="language">语言分布</button>
+          </div>
+          <div class="range-selector">
+            <span class="range-label">数据范围：</span>
+            <button class="range-btn trend-range-btn" data-range-size="10">前10</button>
+            <button class="range-btn trend-range-btn active" data-range-size="50">前50</button>
+            <button class="range-btn trend-range-btn" data-range-size="all">全部</button>
+          </div>
+          <div id="trend-chart" class="chart-box" style="margin-top:12px"></div>
+        </div>
+      </div>
+
+      <!-- ===== 数据对比 ===== -->
+      <div class="view" id="view-compare">
+        <div class="card">
+          <div class="top-bar">
+            <div>
+              <div style="font-size:15px;font-weight:600">数据对比</div>
+              <div style="font-size:12px;color:var(--text3);margin-top:2px">对比不同时间周期的数据差异</div>
+            </div>
+            <div style="display:flex;gap:4px;">
+              <button class="quick-range-btn active" data-compare="daily-weekly">日榜 vs 周榜</button>
+              <button class="quick-range-btn" data-compare="weekly-monthly">周榜 vs 月榜</button>
+              <button class="quick-range-btn" data-compare="daily-monthly">日榜 vs 月榜</button>
+            </div>
+          </div>
+          <div class="comparison-container" style="min-height:440px;">
+            <div class="comparison-chart"><h4 id="compare-label-1">日榜</h4><div id="compare-chart-1" style="height:400px;"></div></div>
+            <div class="comparison-chart"><h4 id="compare-label-2">周榜</h4><div id="compare-chart-2" style="height:400px;"></div></div>
+          </div>
+          <div style="margin-top:16px;">
+            <div class="card-title" style="margin-bottom:8px">汇总对比</div>
+            <div id="compare-summary-chart" style="height:400px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 多源对比 ===== -->
+      <div class="view" id="view-multisource">
+        <div class="section-title">多数据源对比分析</div>
+        <div id="ms-content"><p style="color:var(--text3);font-size:13px">加载中...</p></div>
+      </div>
+
+      <!-- ===== 洞察报告 ===== -->
+      <div class="view" id="view-insight">
+        <div class="card">
+          <div style="margin-bottom:16px;">
+            <div style="font-size:15px;font-weight:600">洞察报告</div>
+            <div style="font-size:12px;color:var(--text3);margin-top:2px">基于数据分析生成的洞察报告</div>
+          </div>
+          <div class="insight-section">
+            <div class="insight-section-title">📊 关键发现</div>
+            <div class="insight-row">
+              <div class="insight-card"><div class="insight-title">🏆 Top Stars 项目</div><div class="insight-content" id="insight-top-stars">加载中...</div></div>
+              <div class="insight-card"><div class="insight-title">📈 增长最快项目</div><div class="insight-content" id="insight-top-growth">加载中...</div></div>
+              <div class="insight-card"><div class="insight-title">🔥 最高热度项目</div><div class="insight-content" id="insight-top-hot">加载中...</div></div>
+            </div>
+          </div>
+          <div class="insight-section">
+            <div class="insight-section-title">💡 热度分析</div>
+            <div class="insight-row-2">
+              <div class="insight-card"><div class="insight-title">⭐ 平均热度分</div><div class="insight-content" id="insight-avg-hot">加载中...</div></div>
+              <div class="insight-card"><div class="insight-title">🌐 最热门语言</div><div class="insight-content" id="insight-top-lang">加载中...</div></div>
+            </div>
+          </div>
+          <div class="insight-section">
+            <div class="insight-section-title">📝 趋势洞察</div>
+            <div class="insight-row-2" id="insight-dynamic-cards"></div>
+          </div>
+          <div style="margin-top:16px;">
+            <div class="card-title" style="margin-bottom:8px">洞察数据支撑 - 语言热度分析</div>
+            <div id="insight-chart" style="height:420px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== AI分析 ===== -->
+      <div class="view" id="view-ai-analysis">
+        <div class="card" style="margin-bottom:0;">
+          <div style="margin-bottom:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+              <div>
+                <div style="font-size:15px;font-weight:600">AI 深度分析</div>
+                <div style="font-size:12px;color:var(--text3);margin-top:2px">基于 DeepSeek AI 生成的技术趋势洞察报告</div>
+              </div>
+              <button id="btn-ai-run" class="metric-btn" style="display:flex;align-items:center;gap:6px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                一键AI分析
+              </button>
+            </div>
+          </div>
+          <div id="ai-loading" style="text-align:center;padding:60px 0;color:var(--text3);">
+            <div style="font-size:24px;margin-bottom:8px;">⏳</div>
+            <div>正在加载AI分析结果...</div>
+          </div>
+          <div id="ai-error" style="display:none;text-align:center;padding:60px 0;color:var(--red);">
+            <div style="font-size:24px;margin-bottom:8px;">❌</div>
+            <div id="ai-error-msg">加载失败</div>
+          </div>
+          <div id="ai-content" style="display:none;">
+            <div class="ai-kpi-grid">
+              <div class="ai-kpi-card"><div class="ai-kpi-icon">🤖</div><div class="ai-kpi-label">分析模型</div><div class="ai-kpi-value" id="ai-model">-</div><div class="ai-kpi-sub" id="ai-model-sub">DeepSeek</div></div>
+              <div class="ai-kpi-card"><div class="ai-kpi-icon">📊</div><div class="ai-kpi-label">分析项目数</div><div class="ai-kpi-value" id="ai-projects-count">-</div><div class="ai-kpi-sub">已分析项目</div></div>
+              <div class="ai-kpi-card"><div class="ai-kpi-icon">🕐</div><div class="ai-kpi-label">分析时间</div><div class="ai-kpi-value" id="ai-analyzed-at">-</div><div class="ai-kpi-sub" id="ai-collection">-</div></div>
+              <div class="ai-kpi-card"><div class="ai-kpi-icon">💡</div><div class="ai-kpi-label">洞察条数</div><div class="ai-kpi-value" id="ai-insight-count">-</div><div class="ai-kpi-sub">趋势+项目+路径+信号</div></div>
+            </div>
+            <div class="ai-two-col">
+              <div class="ai-section-card">
+                <div class="ai-section-header trend-header">📈 趋势识别</div>
+                <div class="ai-section-body" id="ai-trends"></div>
+              </div>
+              <div class="ai-section-card">
+                <div class="ai-section-header project-header">⭐ 值得关注的项目</div>
+                <div class="ai-section-body" id="ai-projects"></div>
+              </div>
+            </div>
+            <div class="ai-two-col">
+              <div class="ai-section-card">
+                <div class="ai-section-header path-header">🎯 学习路径</div>
+                <div class="ai-section-body" id="ai-paths"></div>
+              </div>
+              <div class="ai-section-card">
+                <div class="ai-section-header signal-header">🔍 信号挖掘</div>
+                <div class="ai-section-body" id="ai-signals"></div>
+              </div>
+            </div>
+            <div class="card" style="margin-top:4px;">
+              <div class="card-title" style="margin-bottom:8px">情感倾向分析</div>
+              <div id="ai-sentiment-chart" style="height:400px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </div>
+
+      <aside class="right-panel">
+        <div class="panel-section">
+          <div class="panel-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>关键指标</div>
+          <div class="kpi-grid">
+            <div class="kpi-card"><div class="kpi-label">总 Stars</div><div class="kpi-value" id="kpi-total-stars">0</div></div>
+            <div class="kpi-card"><div class="kpi-label">平均 Stars</div><div class="kpi-value" id="kpi-avg-stars">0</div></div>
+            <div class="kpi-card"><div class="kpi-label">最高 Stars</div><div class="kpi-value" id="kpi-max-stars">0</div></div>
+            <div class="kpi-card"><div class="kpi-label">总 Forks</div><div class="kpi-value" id="kpi-total-forks">0</div></div>
+            <div class="kpi-card" style="grid-column:span 2;"><div class="kpi-label">🔥 总热度分</div><div class="kpi-value" id="kpi-total-hot-score">0</div></div>
+            <div class="kpi-card"><div class="kpi-label">平均热度分</div><div class="kpi-value" id="kpi-avg-hot-score">0</div></div>
+            <div class="kpi-card"><div class="kpi-label">最高热度分</div><div class="kpi-value" id="kpi-max-hot-score">0</div></div>
+          </div>
+        </div>
+        <div class="panel-section">
+          <div class="panel-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>统计摘要</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="padding:12px;background:var(--bg);border-radius:8px;">
+              <div style="font-size:11px;color:var(--text3)">Stars 统计</div>
+              <div class="stat-row"><span class="stat-label">平均值</span><span class="stat-value" id="stat-stars-avg">0</span></div>
+              <div class="stat-row"><span class="stat-label">中位数</span><span class="stat-value" id="stat-stars-median">0</span></div>
+              <div class="stat-row"><span class="stat-label">最大值</span><span class="stat-value" id="stat-stars-max">0</span></div>
+              <div class="stat-row"><span class="stat-label">最小值</span><span class="stat-value" id="stat-stars-min">0</span></div>
+            </div>
+            <div style="padding:12px;background:var(--bg);border-radius:8px;">
+              <div style="font-size:11px;color:var(--text3)">Forks 统计</div>
+              <div class="stat-row"><span class="stat-label">平均值</span><span class="stat-value" id="stat-forks-avg">0</span></div>
+              <div class="stat-row"><span class="stat-label">最大值</span><span class="stat-value" id="stat-forks-max">0</span></div>
+              <div class="stat-row"><span class="stat-label">总计</span><span class="stat-value" id="stat-forks-total">0</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-section">
+          <div class="panel-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>数据来源</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <span class="source-badge">GitHub Trending</span>
+            <div style="font-size:11px;color:var(--text3)">更新时间: <span id="source-update-time">--</span></div>
+            <div style="font-size:11px;color:var(--text3)">共 <span id="data-count">0</span> 条数据记录</div>
+          </div>
+        </div>
+        <div class="panel-section">
+          <div class="panel-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>快速操作</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <button class="metric-btn" style="width:100%;justify-content:center;" id="refresh-data-btn">🔄 刷新数据</button>
+            <button class="metric-btn" style="width:100%;justify-content:center;" id="reset-view-btn">🔃 重置视图</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = 'http://localhost:5000';
+let state = { currentRange:'daily', currentMetric:'stars', currentChart:'bar', currentView:'overview', currentRangeSize:25, trendRangeSize:50, trendType:'stars', compareType:'daily-weekly' };
+let allExportData = [];
+
+function $(id) { return document.getElementById(id); }
+function num(n) { return (n ?? 0).toLocaleString(); }
+function fmtNum(n) { if (n >= 10000) return (n / 10000).toFixed(1) + '万'; return n.toLocaleString(); }
+
+function sampleData(data, target) {
+  if (data.length <= target) return data;
+  const result = []; const step = data.length / target;
+  for (let i = 0; i < target; i++) result.push(data[Math.floor(i * step)]);
+  return result;
+}
+
+async function fetchAPI(path) {
+  const r = await fetch(API + path);
+  if (!r.ok) throw new Error(`${r.status}`);
+  return r.json();
+}
+
+const SRC_COLORS = { github:'#165DFF', hn:'#FF7D00', arxiv:'#F53F3F', reddit:'#0FC6C2' };
+const SRC_LABELS = { github:'GitHub', hn:'Hacker News', arxiv:'arXiv', reddit:'Reddit' };
+const SRC_TAG_CLASS = { github:'', hn:'tag-orange', arxiv:'tag-purple', reddit:'tag-cyan' };
+const RANGE_LABELS = { daily:'日榜', weekly:'周榜', monthly:'月榜' };
+
+// ==================== Theme ====================
+$('theme-toggle-btn').addEventListener('click', () => {
+  document.body.classList.toggle('dark-theme');
+  localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+});
+if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-theme');
+
+// ==================== Navigation ====================
+document.querySelectorAll('.nav-item').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    $('view-' + btn.dataset.view).classList.add('active');
+    state.currentView = btn.dataset.view;
+    if (btn.dataset.view === 'overview') renderOverview();
+    if (btn.dataset.view === 'trend') renderTrend();
+    if (btn.dataset.view === 'compare') renderCompare();
+    if (btn.dataset.view === 'multisource') renderMultiSource();
+    if (btn.dataset.view === 'insight') renderInsight();
+    if (btn.dataset.view === 'ai-analysis') renderAIAnalysis();
+  });
+});
+
+// ==================== Export ====================
+$('btn-export-main').addEventListener('click', e => { e.stopPropagation(); $('export-menu').classList.toggle('show'); });
+document.addEventListener('click', () => $('export-menu').classList.remove('show'));
+document.querySelectorAll('.export-menu-item').forEach(item => {
+  item.addEventListener('click', e => {
+    e.stopPropagation(); $('export-menu').classList.remove('show');
+    if (item.dataset.format === 'csv') exportCSV(); else exportJSON();
+  });
+});
+function exportCSV() {
+  if (!allExportData.length) { alert('暂无数据可导出'); return; }
+  const keys = Object.keys(allExportData[0]);
+  const csv = [keys.join(','), ...allExportData.map(row => keys.map(k => { let v = row[k] ?? ''; if (typeof v === 'object') v = JSON.stringify(v); if (typeof v === 'string' && (v.includes(',') || v.includes('"'))) v = '"' + v.replace(/"/g, '""') + '"'; return v; }).join(','))].join('\n');
+  downloadFile(csv, 'tech_hotspot_export.csv', 'text/csv;charset=utf-8');
+}
+function exportJSON() {
+  if (!allExportData.length) { alert('暂无数据可导出'); return; }
+  downloadFile(JSON.stringify(allExportData, null, 2), 'tech_hotspot_export.json', 'application/json;charset=utf-8');
+}
+function downloadFile(content, filename, mimeType) {
+  const blob = new Blob(['\uFEFF' + content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+
+// ==================== Search ====================
+$('search-input').addEventListener('input', () => {
+  const query = $('search-input').value.trim().toLowerCase();
+  if (!query.length) { $('search-results').classList.remove('active'); return; }
+  const data = getData();
+  const matches = data.filter(d => (d.name||'').toLowerCase().includes(query) || (d.description||'').toLowerCase().includes(query) || (d.language||'').toLowerCase().includes(query) || (d.owner||'').toLowerCase().includes(query)).slice(0, 10);
+  if (!matches.length) { $('search-results').innerHTML = '<div class="search-result-item" style="color:var(--text3)">未找到匹配项目</div>'; }
+  else { $('search-results').innerHTML = matches.map(d => `<div class="search-result-item" data-name="${d.name}"><strong>${d.name.split('/')[1]||d.name}</strong><span style="color:var(--text3);font-size:11px">${d.language||'-'}</span></div>`).join(''); }
+  $('search-results').classList.add('active');
+});
+document.addEventListener('click', e => { if (!e.target.closest('.search-box')) $('search-results').classList.remove('active'); });
+
+// ==================== Quick Actions ====================
+$('refresh-data-btn').addEventListener('click', async () => {
+  const btn = $('refresh-data-btn');
+  btn.disabled = true; btn.textContent = '⏳ 加载中...'; btn.style.opacity = '0.6';
+  try {
+    await loadData();
+    refreshOverview();
+    btn.textContent = '✅ 刷新成功';
+    btn.style.background = 'var(--primary)'; btn.style.color = '#fff'; btn.style.borderColor = 'var(--primary)';
+    setTimeout(() => { btn.textContent = '🔄 刷新数据'; btn.style.background = ''; btn.style.color = ''; btn.style.borderColor = ''; btn.disabled = false; btn.style.opacity = '1'; }, 1500);
+  } catch(e) {
+    btn.textContent = '❌ 刷新失败';
+    btn.style.background = 'var(--red)'; btn.style.color = '#fff'; btn.style.borderColor = 'var(--red)';
+    setTimeout(() => { btn.textContent = '🔄 刷新数据'; btn.style.background = ''; btn.style.color = ''; btn.style.borderColor = ''; btn.disabled = false; btn.style.opacity = '1'; }, 2000);
+  }
+});
+$('reset-view-btn').addEventListener('click', () => {
+  state.currentRange = 'daily'; state.currentMetric = 'stars'; state.currentChart = 'bar'; state.currentRangeSize = 25;
+  $('sidebar-range-tabs').querySelectorAll('.sub-tab').forEach(b => b.classList.toggle('active', b.dataset.range === 'daily'));
+  $('metric-selector').querySelectorAll('.metric-btn').forEach(b => b.classList.toggle('active', b.dataset.metric === 'stars'));
+  ['chart-type-btns','sidebar-chart-types'].forEach(cId => { const c = $(cId); if(c) c.querySelectorAll('.chart-type-btn-inline, .chart-type-btn').forEach(b => b.classList.toggle('active', b.dataset.chart === 'bar')); });
+  document.querySelectorAll('.range-btn:not(.trend-range-btn)').forEach(b => b.classList.toggle('active', b.dataset.rangeSize === '25'));
+  refreshOverview();
+  const btn = $('reset-view-btn');
+  btn.textContent = '✅ 已重置';
+  btn.style.background = 'var(--primary)'; btn.style.color = '#fff'; btn.style.borderColor = 'var(--primary)';
+  setTimeout(() => { btn.textContent = '🔃 重置视图'; btn.style.background = ''; btn.style.color = ''; btn.style.borderColor = ''; }, 1500);
+});
+
+// ==================== Init ====================
+document.addEventListener('DOMContentLoaded', async () => {
+  $('header-time').textContent = new Date().toLocaleString('zh-CN');
+  setInterval(() => $('header-time').textContent = new Date().toLocaleString('zh-CN'), 10000);
+  await renderOverview();
+});
+
+// ================================================================
+// Data Layer
+// ================================================================
+let dataSets = { daily:[], weekly:[], monthly:[] };
+let chart, langChartE, scatterChartE, trendChart, compareChart1, compareChart2, compareSummaryChart, insightChart;
+const msCharts = {};
+
+function getData() { return dataSets[state.currentRange] || []; }
+
+function getDisplayData(data, rangeSize) {
+  const rs = rangeSize || state.currentRangeSize;
+  if (rs === 'all') return data; // 全部数据不截断，完整返回
+  return [...data].sort((a,b) => (b[state.currentMetric]||0) - (a[state.currentMetric]||0)).slice(0, parseInt(rs));
+}
+
+async function loadData() {
+  try {
+    const [daily, weekly, monthly] = await Promise.all([
+      fetchAPI('/api/hotspot?source=github&range=daily&sort_by=hot_score&limit=300&use_csv=true'),
+      fetchAPI('/api/hotspot?source=github&range=weekly&sort_by=hot_score&limit=300&use_csv=true'),
+      fetchAPI('/api/hotspot?source=github&range=monthly&sort_by=hot_score&limit=300&use_csv=true'),
+    ]);
+    dataSets = { daily, weekly, monthly };
+  } catch(e) {
+    try {
+      const [daily, weekly, monthly] = await Promise.all([
+        fetchAPI('/api/hotspot?source=github&range=daily&sort_by=hot_score&limit=300'),
+        fetchAPI('/api/hotspot?source=github&range=weekly&sort_by=hot_score&limit=300'),
+        fetchAPI('/api/hotspot?source=github&range=monthly&sort_by=hot_score&limit=300'),
+      ]);
+      dataSets = { daily, weekly, monthly };
+    } catch(e2) {
+      try {
+        const periods = await fetchAPI('/api/system/periods');
+        for (const [k, v] of Object.entries(periods)) {
+          dataSets[k] = (v.top10||[]).map(item => ({ name:item.name, stars:item.stars, stars_since:item.stars_since, forks:item.forks, language:item.language, description:item.description, hot_score:item.stars_since*10+item.forks*5, owner:item.owner, url:item.url }));
+        }
+      } catch(e3) {
+        $('overview-kpi').innerHTML = '<div class="card" style="grid-column:span 4;text-align:center;color:var(--red)"><div class="card-title">无法连接到数据服务</div><div class="card-value" style="font-size:14px">请确认 Flask API 服务器 (端口 5000) 已启动</div></div>';
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+// ================================================================
+// Overview
+// ================================================================
+async function renderOverview() {
+  const ok = await loadData();
+  if (!ok) return;
+  bindOverviewEvents();
+  if (!chart) chart = echarts.init($('main-chart'));
+  if (!langChartE) langChartE = echarts.init($('lang-chart'));
+  if (!scatterChartE) scatterChartE = echarts.init($('scatter-chart'));
+  window.addEventListener('resize', () => { chart?.resize(); langChartE?.resize(); scatterChartE?.resize(); });
+  refreshOverview();
+}
+
+function bindOverviewEvents() {
+  $('sidebar-range-tabs').querySelectorAll('.sub-tab').forEach(btn => {
+    btn.onclick = () => { $('sidebar-range-tabs').querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active')); btn.classList.add('active'); state.currentRange = btn.dataset.range; refreshOverview(); };
+  });
+  $('metric-selector').querySelectorAll('.metric-btn').forEach(btn => {
+    btn.onclick = () => { $('metric-selector').querySelectorAll('.metric-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); state.currentMetric = btn.dataset.metric; refreshOverview(); };
+  });
+  ['chart-type-btns', 'sidebar-chart-types'].forEach(id => {
+    const el = $(id); if (!el) return;
+    el.querySelectorAll('.chart-type-btn-inline, .chart-type-btn').forEach(btn => {
+      btn.onclick = () => { ['chart-type-btns','sidebar-chart-types'].forEach(cId => { const c = $(cId); if(c) c.querySelectorAll('.chart-type-btn-inline, .chart-type-btn').forEach(b => b.classList.remove('active')); }); btn.classList.add('active'); state.currentChart = btn.dataset.chart; refreshOverview(); };
+    });
+  });
+  document.querySelectorAll('.range-btn:not(.trend-range-btn)').forEach(btn => {
+    if (btn.dataset.rangeSize) btn.onclick = () => { document.querySelectorAll('.range-btn:not(.trend-range-btn)').forEach(b => b.classList.remove('active')); btn.classList.add('active'); state.currentRangeSize = btn.dataset.rangeSize === 'all' ? 'all' : parseInt(btn.dataset.rangeSize); refreshOverview(); };
+  });
+}
+
+function refreshOverview() {
+  const data = getData(); allExportData = data;
+  updateKPIPanel(data);
+  const totalStars = data.reduce((a,b) => a + (b.stars||0), 0);
+  const totalForks = data.reduce((a,b) => a + (b.forks||0), 0);
+  const langs = new Set(data.map(d => d.language).filter(Boolean));
+  $('overview-kpi').innerHTML = `<div class="card"><div class="card-title">项目数</div><div class="card-value">${data.length}</div></div><div class="card"><div class="card-title">Stars 总数</div><div class="card-value">${num(totalStars)}</div></div><div class="card"><div class="card-title">语言数</div><div class="card-value">${langs.size}</div></div><div class="card"><div class="card-title">Forks 总数</div><div class="card-value">${num(totalForks)}</div></div>`;
+  const sorted = getDisplayData(data);
+  const names = sorted.map(d => { const p = (d.name||'').split('/'); return p[1]||p[0]; });
+  const values = sorted.map(d => d[state.currentMetric]||0);
+  const ct = state.currentChart;
+  const isAll = state.currentRangeSize === 'all';
+  const chartEl = $('main-chart');
+  chartEl.style.height = isAll && (ct === 'bar' || ct === 'line') ? '600px' : '400px';
+  chart?.resize();
+  let option;
+  if (ct === 'bar') {
+    option = { tooltip:{trigger:'axis',axisPointer:{type:'shadow'},confine:true}, grid:{left:'3%',right:'4%',bottom:'18%',containLabel:true}, xAxis:{type:'category',data:names,axisLabel:{color:'#86909C',rotate:60,fontSize:10,interval:0,overflow:'truncate',width:80}}, yAxis:{type:'value',axisLabel:{color:'#86909C',formatter:v=>fmtNum(v)},splitLine:{lineStyle:{color:'#F2F3F5'}}}, series:[{type:'bar',data:values,itemStyle:{color:{type:'linear',x:0,y:0,x:0,y:1,colorStops:[{offset:0,color:'#165DFF'},{offset:1,color:'#4080FF'}]},borderRadius:[4,4,0,0]},barMaxWidth:isAll?18:30}] };
+  } else if (ct === 'line') {
+    option = { tooltip:{trigger:'axis',confine:true}, grid:{left:'3%',right:'4%',bottom:'18%',containLabel:true}, xAxis:{type:'category',data:names,axisLabel:{color:'#86909C',rotate:60,fontSize:10,interval:0,overflow:'truncate',width:80}}, yAxis:{type:'value',axisLabel:{color:'#86909C',formatter:v=>fmtNum(v)},splitLine:{lineStyle:{color:'#F2F3F5'}}}, series:[{type:'line',data:values,smooth:true,symbol:'circle',symbolSize:isAll?3:6,lineStyle:{width:2,color:'#165DFF'},itemStyle:{color:'#165DFF'},areaStyle:{color:{type:'linear',x:0,y:0,x:0,y:1,colorStops:[{offset:0,color:'rgba(22,93,255,.2)'},{offset:1,color:'rgba(22,93,255,.01)'}]}}}] };
+  } else if (ct === 'pie') {
+    const langData = {}; data.forEach(d => { const l = d.language||'Unknown'; langData[l] = (langData[l]||0) + (d[state.currentMetric]||1); });
+    const pieData = Object.entries(langData).sort((a,b) => b[1]-a[1]).slice(0,10).map(([n,v]) => ({name:n,value:v}));
+    option = { tooltip:{trigger:'item',formatter:'{b}: {c} ({d}%)'}, legend:{orient:'vertical',right:'5%',top:'center',textStyle:{color:'#4E5969',fontSize:11}}, series:[{type:'pie',radius:['40%','70%'],center:['35%','50%'],data:pieData,itemStyle:{borderRadius:6,borderColor:'#fff',borderWidth:2},label:{show:true,formatter:'{b}\n{d}%',color:'#4E5969',fontSize:11},emphasis:{label:{show:true,fontSize:14,fontWeight:'bold'}}}] };
+  } else if (ct === 'scatter') {
+    option = { tooltip:{trigger:'item',confine:true}, grid:{left:'3%',right:'4%',bottom:'3%',containLabel:true}, xAxis:{type:'value',name:'Stars',axisLabel:{color:'#86909C',formatter:v=>fmtNum(v)},splitLine:{lineStyle:{color:'#F2F3F5'}}}, yAxis:{type:'value',name:'Forks',axisLabel:{color:'#86909C',formatter:v=>fmtNum(v)},splitLine:{lineStyle:{color:'#F2F3F5'}}}, series:[{type:'scatter',data:data.slice(0,100).map(d=>[d.stars||0,d.forks||0,d.hot_score||0]),symbolSize:val=>Math.max(8,Math.min(35,(val[2]||0)/500)),itemStyle:{color:'rgba(22,93,255,.5)'}}] };
+  } else if (ct === 'radar') {
+    const top6 = [...data].sort((a,b) => (b.hot_score||0)-(a.hot_score||0)).slice(0,6);
+    const metrics = ['stars','forks','stars_since','hot_score'];
+    const metricLabels = {stars:'Stars',forks:'Forks',stars_since:'日增长',hot_score:'热度分'};
+    const indicators = metrics.map(key => ({name:metricLabels[key],max:Math.max(...top6.map(item=>item[key]||0))*1.2||1}));
+    option = { tooltip:{}, legend:{data:top6.map(d=>{const p=(d.name||'').split('/');return p[1]||p[0]}),textStyle:{color:'#4E5969',fontSize:11}}, radar:{indicator:indicators,shape:'polygon',splitNumber:4,axisName:{color:'#4E5969',fontSize:11}}, series:[{type:'radar',data:top6.map((d,i)=>({value:metrics.map(m=>d[m]||0),name:(()=>{const p=(d.name||'').split('/');return p[1]||p[0]})(),areaStyle:{opacity:0.15+i*0.05},lineStyle:{width:2}}))}] };
+  }
+  chart.setOption(option, true);
+  // Language chart
+  const langCount = {}; data.forEach(d => { const l = d.language||'Unknown'; langCount[l] = (langCount[l]||0)+1; });
+  const langEntries = Object.entries(langCount).sort((a,b) => b[1]-a[1]).slice(0,12);
+  langChartE.setOption({ tooltip:{trigger:'item',formatter:'{b}: {c} ({d}%)'}, series:[{type:'pie',radius:['35%','65%'],data:langEntries.map(([n,v])=>({name:n,value:v})),itemStyle:{borderRadius:4,borderColor:'#fff',borderWidth:2},label:{color:'#4E5969',fontSize:11}}] }, true);
+  // Scatter
+  scatterChartE.setOption({ tooltip:{trigger:'item'}, grid:{left:'3%',right:'4%',bottom:'3%',containLabel:true}, xAxis:{type:'value',name:'Stars',axisLabel:{color:'#86909C',formatter:v=>fmtNum(v)},splitLine:{lineStyle:{color:'#F2F3F5'}}}, yAxis:{type:'value',name:'Forks',axisLabel:{color:'#86909C',formatter:v=>fmtNum(v)},splitLine:{lineStyle:{color:'#F2F3F5'}}}, series:[{type:'scatter',data:data.slice(0,100).map(d=>[d.stars||0,d.forks||0]),symbolSize:7,itemStyle:{color:'rgba(22,93,255,.5)'}}] }, true);
+}
+
+function updateKPIPanel(data) {
+  const stars = data.map(i=>i.stars||0); const forks = data.map(i=>i.forks||0); const hotScores = data.map(i=>i.hot_score||0);
+  const totalStars = stars.reduce((a,b)=>a+b,0); const avgStars = Math.round(totalStars/stars.length)||0; const maxStars = Math.max(...stars)||0;
+  const totalForks = forks.reduce((a,b)=>a+b,0); const avgForks = Math.round(totalForks/forks.length)||0; const maxForks = Math.max(...forks)||0;
+  const totalHotScore = hotScores.reduce((a,b)=>a+b,0); const avgHotScore = Math.round((totalHotScore/hotScores.length)*100)/100||0; const maxHotScore = Math.max(...hotScores)||0;
+  const sortedStars = [...stars].sort((a,b)=>a-b); const medianStars = sortedStars[Math.floor(sortedStars.length/2)]||0; const minStars = Math.min(...stars)||0;
+  $('kpi-total-stars').textContent = num(totalStars); $('kpi-avg-stars').textContent = num(avgStars); $('kpi-max-stars').textContent = num(maxStars);
+  $('kpi-total-forks').textContent = num(totalForks); $('kpi-total-hot-score').textContent = num(totalHotScore); $('kpi-avg-hot-score').textContent = avgHotScore; $('kpi-max-hot-score').textContent = maxHotScore;
+  $('stat-stars-avg').textContent = num(avgStars); $('stat-stars-median').textContent = num(medianStars); $('stat-stars-max').textContent = num(maxStars); $('stat-stars-min').textContent = num(minStars);
+  $('stat-forks-avg').textContent = num(avgForks); $('stat-forks-max').textContent = num(maxForks); $('stat-forks-total').textContent = num(totalForks);
+  $('data-count').textContent = data.length; $('source-update-time').textContent = new Date().toLocaleString('zh-CN');
+}
+
+// ================================================================
+// Trend Analysis
+// ================================================================
+function renderTrend() {
+  if (!trendChart) trendChart = echarts.init($('trend-chart'));
+  window.addEventListener('resize', () => trendChart?.resize());
+  $('trend-tabs').querySelectorAll('.trend-tab').forEach(btn => {
+    btn.onclick = () => { $('trend-tabs').querySelectorAll('.trend-tab').forEach(b => b.classList.remove('active')); btn.classList.add('active'); state.trendType = btn.dataset.trend; renderTrendChart(); };
+  });
+  document.querySelectorAll('.trend-range-btn').forEach(btn => {
+    btn.onclick = () => { document.querySelectorAll('.trend-range-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); state.trendRangeSize = btn.dataset.rangeSize === 'all' ? 'all' : parseInt(btn.dataset.rangeSize); renderTrendChart(); };
+  });
+  renderTrendChart();
+}
+
+function renderTrendChart() {
+  let data = getData(); const type = state.trendType;
+  if (state.trendRangeSize !== 'all') {
+    const metricKey = type === 'stars' ? 'stars' : type === 'forks' ? 'forks' : 'stars_since';
+    data = [...data].sort((a,b) => b[metricKey] - a[metricKey]).slice(0, parseInt(state.trendRangeSize));
+  }
+  const names = data.map(item => { const p = (item.name||'').split('/'); return p[1]||p[0]; });
+  const isAll = state.trendRangeSize === 'all';
+  const trendEl = $('trend-chart');
+  trendEl.style.height = isAll && type !== 'language' ? '600px' : '400px';
+  trendChart?.resize();
+  let option;
+  if (type === 'language') {
+    const langData = {}; data.forEach(item => { langData[item.language||'Unknown'] = (langData[item.language||'Unknown']||0) + 1; });
+    const langEntries = Object.entries(langData).sort((a,b) => b[1]-a[1]);
+    option = { tooltip:{trigger:'axis',axisPointer:{type:'shadow'}}, grid:{left:'3%',right:'4%',bottom:'3%',containLabel:true}, xAxis:{type:'category',data:langEntries.map(e=>e[0]),axisLabel:{fontSize:12,color:'#86909C',rotate:45}}, yAxis:{type:'value',axisLabel:{color:'#86909C'},splitLine:{lineStyle:{color:'#F2F3F5'}}}, series:[{type:'bar',data:langEntries.map(e=>e[1]),itemStyle:{color:{type:'linear',x:0,y:0,x:0,y:1,colorStops:[{offset:0,color:'#00B42A'},{offset:1,color:'#34D058'}]},borderRadius:[4,4,0,0]},barMaxWidth:30}] };
+  } else {
+    const values = data.map(item => type === 'stars' ? item.stars : type === 'forks' ? item.forks : item.stars_since);
+    const lineColor = type === 'growth' ? '#00B42A' : '#165DFF';
+    option = { tooltip:{trigger:'axis'}, grid:{left:'3%',right:'4%',bottom:'18%',containLabel:true}, xAxis:{type:'category',data:names,axisLabel:{rotate:60,fontSize:10,color:'#86909C',interval:0,overflow:'truncate',width:80}}, yAxis:{type:'value',axisLabel:{color:'#86909C',formatter:v=>fmtNum(v)},splitLine:{lineStyle:{color:'#F2F3F5'}}}, series:[{type:'line',data:values,smooth:true,symbol:'circle',symbolSize:isAll?3:6,lineStyle:{width:2,color:lineColor},itemStyle:{color:lineColor},areaStyle:{color:{type:'linear',x:0,y:0,x:0,y:1,colorStops:[{offset:0,color:type==='growth'?'rgba(0,180,42,0.3)':'rgba(22,93,255,0.3)'},{offset:1,color:'rgba(22,93,255,0.05)'}]}}}] };
+  }
+  trendChart.setOption(option, true);
+}
+
+// ================================================================
+// Data Comparison
+// ================================================================
+function renderCompare() {
+  if (!compareChart1) compareChart1 = echarts.init($('compare-chart-1'));
+  if (!compareChart2) compareChart2 = echarts.init($('compare-chart-2'));
+  if (!compareSummaryChart) compareSummaryChart = echarts.init($('compare-summary-chart'));
+  window.addEventListener('resize', () => { compareChart1?.resize(); compareChart2?.resize(); compareSummaryChart?.resize(); });
+  document.querySelectorAll('.quick-range-btn').forEach(btn => {
+    btn.onclick = () => { document.querySelectorAll('.quick-range-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); state.compareType = btn.dataset.compare; renderCompareCharts(); };
+  });
+  renderCompareCharts();
+}
+
+function renderCompareCharts() {
+  const [range1, range2] = state.compareType.split('-');
+  const data1 = dataSets[range1] || []; const data2 = dataSets[range2] || [];
+  $('compare-label-1').textContent = RANGE_LABELS[range1] || range1;
+  $('compare-label-2').textContent = RANGE_LABELS[range2] || range2;
+  const names1 = data1.slice(0,10).map(d => { const p = (d.name||'').split('/'); return p[1]||p[0]; });
+  const names2 = data2.slice(0,10).map(d => { const p = (d.name||'').split('/'); return p[1]||p[0]; });
+  const barOpt = (names, values, color) => ({
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'}}, grid:{left:'3%',right:'4%',bottom:'15%',containLabel:true},
+    xAxis:{type:'category',data:names,axisLabel:{rotate:45,fontSize:11,color:'#86909C'}},
+    yAxis:{type:'value',axisLabel:{color:'#86909C',formatter:v=>fmtNum(v)},splitLine:{lineStyle:{color:'#F2F3F5'}}},
+    series:[{type:'bar',data:values,itemStyle:{color,borderRadius:[4,4,0,0]},barMaxWidth:30}]
+  });
+  compareChart1.setOption(barOpt(names1, data1.slice(0,10).map(d=>d.stars||0), '#165DFF'), true);
+  compareChart2.setOption(barOpt(names2, data2.slice(0,10).map(d=>d.stars||0), '#00B42A'), true);
+  // Summary
+  const mergedData = []; const allNames = [...new Set([...names1, ...names2])];
+  allNames.forEach(name => {
+    const item1 = data1.find(d => { const p = (d.name||'').split('/'); return (p[1]||p[0]) === name; });
+    const item2 = data2.find(d => { const p = (d.name||'').split('/'); return (p[1]||p[0]) === name; });
+    mergedData.push({ name, value1: item1 ? item1.stars : 0, value2: item2 ? item2.stars : 0 });
+  });
+  mergedData.sort((a,b) => (b.value1+b.value2) - (a.value1+a.value2));
+  const top8 = mergedData.slice(0,8);
+  compareSummaryChart.setOption({
+    tooltip:{trigger:'axis'}, legend:{data:[RANGE_LABELS[range1], RANGE_LABELS[range2]],textStyle:{color:'#4E5969',fontSize:11}},
+    grid:{left:'3%',right:'4%',bottom:'15%',containLabel:true},
+    xAxis:{type:'category',data:top8.map(d=>d.name),axisLabel:{rotate:45,fontSize:11,color:'#86909C'}},
+    yAxis:{type:'value',axisLabel:{color:'#86909C',formatter:v=>fmtNum(v)},splitLine:{lineStyle:{color:'#F2F3F5'}}},
+    series:[
+      {type:'bar',name:RANGE_LABELS[range1],data:top8.map(d=>d.value1),itemStyle:{color:'#165DFF',borderRadius:[4,4,0,0]},barMaxWidth:25},
+      {type:'bar',name:RANGE_LABELS[range2],data:top8.map(d=>d.value2),itemStyle:{color:'#00B42A',borderRadius:[4,4,0,0]},barMaxWidth:25}
+    ]
+  }, true);
+}
+
+// ================================================================
+// Multi-Source Comparison
+// ================================================================
+async function renderMultiSource() {
+  try {
+    const [overview] = await Promise.all([fetchAPI('/api/system/overview')]);
+    const sc = overview.source_counts || {}; const sources = Object.keys(sc);
+    if (!sources.length) { $('ms-content').innerHTML = '<p style="color:var(--text3)">暂无多源数据</p>'; return; }
+    let html = '<div class="grid-4" style="margin-bottom:16px">';
+    for (const [src, count] of Object.entries(sc)) html += `<div class="card ms-source-card src-${src}"><div class="card-title">${SRC_LABELS[src]||src}</div><div class="card-value">${num(count)}</div><div class="card-label">项目数</div></div>`;
+    html += '</div>';
+    try {
+      const [allSourcesData, collections] = await Promise.all([fetchAPI('/api/sources'), fetchAPI('/api/collections')]);
+      const bestCollection = {}; const srcMaxCount = {};
+      for (const [coll, srcCounts] of Object.entries(allSourcesData)) { for (const [src, count] of Object.entries(srcCounts)) { if (count > (srcMaxCount[src]||0)) { srcMaxCount[src] = count; bestCollection[src] = coll; } } }
+      const allDataBySource = {}; const allDataArr = [];
+      for (const src of sources) { const coll = bestCollection[src] || collections[0]; const srcData = await fetchAPI(`/api/hotspot?collection=${coll}&source=${src}&sort_by=hot_score&limit=300`); allDataBySource[src] = srcData; allDataArr.push(...srcData); }
+      allExportData = allDataArr;
+      html += '<div class="grid-2" style="margin-bottom:16px">';
+      html += `<div class="card"><div class="card-title">各源项目数分布</div><div id="ms-source-pie" class="chart-box" style="height:320px"></div></div>`;
+      html += `<div class="card"><div class="card-title">各源平均热度分</div><div id="ms-avg-hot" class="chart-box" style="height:320px"></div></div>`;
+      html += '</div>';
+      html += '<div class="grid-2" style="margin-bottom:16px">';
+      html += `<div class="card"><div class="card-title">热度分分布对比</div><div id="ms-hot-dist" class="chart-box" style="height:320px"></div></div>`;
+      html += `<div class="card"><div class="card-title">各源 Top 10 项目</div><div id="ms-top-table" style="max-height:320px;overflow-y:auto"></div></div>`;
+      html += '</div>';
+      html += '<div class="grid-2" style="margin-bottom:16px">';
+      html += `<div class="card"><div class="card-title">各源语言分布</div><div id="ms-lang-dist" class="chart-box" style="height:320px"></div></div>`;
+      html += `<div class="card"><div class="card-title">各源热度 Top 10 对比</div><div id="ms-hot-compare" class="chart-box" style="height:320px"></div></div>`;
+      html += '</div>';
+      html += '<div class="card" style="margin-bottom:16px"><div class="card-title">全局热度 Top 20</div>';
+      const top20 = [...allDataArr].sort((a,b) => (b.hot_score||0)-(a.hot_score||0)).slice(0,20);
+      html += '<table><tr><th>#</th><th>项目</th><th>源</th><th>热度分</th><th>Stars/分数</th><th>描述</th></tr>';
+      top20.forEach((d,i) => { const tagCls = SRC_TAG_CLASS[d.source]||''; const metricVal = d.source==='github'?num(d.stars):(d.score?num(d.score):'-'); html += `<tr><td>${i+1}</td><td>${d.name||d.title||'-'}</td><td><span class="tag ${tagCls}">${SRC_LABELS[d.source]||d.source}</span></td><td>${num(d.hot_score)}</td><td>${metricVal}</td><td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${d.description||'-'}</td></tr>`; });
+      html += '</table></div>';
+      html += '<div class="section-title" style="margin-top:8px">各数据源详情</div>';
+      html += '<div class="sub-tabs-horizontal" id="ms-source-tabs">';
+      sources.forEach((src,i) => { html += `<button class="sub-tab-h ${i===0?'active':''}" data-src="${src}">${SRC_LABELS[src]||src}</button>`; });
+      html += '</div><div id="ms-source-detail"></div>';
+      $('ms-content').innerHTML = html;
+      setTimeout(() => {
+        renderMsSourcePie(allDataBySource); renderMsAvgHot(allDataBySource); renderMsHotDist(allDataBySource); renderMsTopTable(allDataBySource); renderMsLangDist(allDataBySource); renderMsHotCompare(allDataBySource);
+        showSourceDetail(sources[0], allDataBySource);
+        document.querySelectorAll('#ms-source-tabs .sub-tab-h').forEach(btn => { btn.onclick = () => { document.querySelectorAll('#ms-source-tabs .sub-tab-h').forEach(b => b.classList.remove('active')); btn.classList.add('active'); showSourceDetail(btn.dataset.src, allDataBySource); }; });
+      }, 50);
+    } catch(e) { $('ms-content').innerHTML = '<p style="color:var(--text3)">无法加载多源详情</p>'; }
+  } catch(e) { $('ms-content').innerHTML = '<p style="color:var(--red)">无法连接到数据服务，请确认 API 服务已启动</p>'; }
+}
+
+function renderMsSourcePie(allDataBySource) {
+  const el = $('ms-source-pie'); if (!el) return;
+  if (!msCharts.sourcePie) msCharts.sourcePie = echarts.init(el);
+  const data = Object.entries(allDataBySource).map(([src,items]) => ({name:SRC_LABELS[src]||src,value:items.length,itemStyle:{color:SRC_COLORS[src]||'#86909C'}}));
+  msCharts.sourcePie.setOption({tooltip:{trigger:'item',formatter:'{b}: {c} ({d}%)'},series:[{type:'pie',radius:['35%','65%'],data,itemStyle:{borderRadius:4,borderColor:'#fff',borderWidth:2},label:{color:'#4E5969',fontSize:11}}]}, true);
+  window.addEventListener('resize', () => msCharts.sourcePie?.resize());
+}
+function renderMsAvgHot(allDataBySource) {
+  const el = $('ms-avg-hot'); if (!el) return;
+  if (!msCharts.avgHot) msCharts.avgHot = echarts.init(el);
+  const entries = Object.entries(allDataBySource).map(([src,items]) => { const avg = items.length ? items.reduce((a,b)=>a+(b.hot_score||0),0)/items.length : 0; return {name:SRC_LABELS[src]||src,value:Math.round(avg),color:SRC_COLORS[src]||'#86909C'}; }).filter(e => e.value > 0);
+  if (!entries.length) { el.parentElement.innerHTML = '<div style="text-align:center;color:var(--text3);padding:40px">暂无有效热度分数据</div>'; return; }
+  msCharts.avgHot.setOption({tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},grid:{left:'3%',right:'4%',bottom:'3%',containLabel:true},xAxis:{type:'category',data:entries.map(e=>e.name),axisLabel:{color:'#86909C'}},yAxis:{type:'value',axisLabel:{color:'#86909C'},splitLine:{lineStyle:{color:'#F2F3F5'}}},series:[{type:'bar',data:entries.map(e=>({value:e.value,itemStyle:{color:e.color,borderRadius:[4,4,0,0]}}))}]}, true);
+  window.addEventListener('resize', () => msCharts.avgHot?.resize());
+}
+function renderMsHotDist(allDataBySource) {
+  const el = $('ms-hot-dist'); if (!el) return;
+  if (!msCharts.hotDist) msCharts.hotDist = echarts.init(el);
+  const filteredSources = Object.entries(allDataBySource).filter(([,items]) => items.reduce((a,b)=>a+(b.hot_score||0),0) > 0);
+  if (!filteredSources.length) { el.parentElement.innerHTML = '<div style="text-align:center;color:var(--text3);padding:40px">暂无有效热度分数据</div>'; return; }
+  const lastSrc = filteredSources[filteredSources.length-1][0];
+  const series = filteredSources.map(([src,items]) => ({name:SRC_LABELS[src]||src,type:'bar',stack:'total',data:items.slice(0,10).map(d=>d.hot_score||0),itemStyle:{color:SRC_COLORS[src]||'#86909C',borderRadius:src===lastSrc?[4,4,0,0]:[0,0,0,0]}}));
+  const categories = filteredSources[0]?.[1].slice(0,10).map((d,i)=>`#${i+1}`) || [];
+  msCharts.hotDist.setOption({tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},legend:{textStyle:{color:'#4E5969'}},grid:{left:'3%',right:'4%',bottom:'3%',containLabel:true},xAxis:{type:'category',data:categories,axisLabel:{color:'#86909C'}},yAxis:{type:'value',axisLabel:{color:'#86909C'},splitLine:{lineStyle:{color:'#F2F3F5'}}},series}, true);
+  window.addEventListener('resize', () => msCharts.hotDist?.resize());
+}
+function renderMsTopTable(allDataBySource) {
+  const el = $('ms-top-table'); if (!el) return;
+  let html = '';
+  for (const [src, items] of Object.entries(allDataBySource)) {
+    const top5 = [...items].sort((a,b)=>(b.hot_score||0)-(a.hot_score||0)).slice(0,5);
+    if (!top5.length) continue;
+    html += `<div style="margin-bottom:8px"><span class="tag ${SRC_TAG_CLASS[src]||''}" style="margin-bottom:4px;display:inline-block">${SRC_LABELS[src]||src}</span></div>`;
+    html += '<table style="margin-bottom:12px"><tr><th>#</th><th>名称</th><th>热度</th></tr>';
+    top5.forEach((d,i) => { html += `<tr><td>${i+1}</td><td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${d.name||d.title||'-'}</td><td>${num(d.hot_score)}</td></tr>`; });
+    html += '</table>';
+  }
+  el.innerHTML = html;
+}
+function renderMsLangDist(allDataBySource) {
+  const el = $('ms-lang-dist'); if (!el) return;
+  if (!msCharts.langDist) msCharts.langDist = echarts.init(el);
+  const langBySource = {};
+  for (const [src, items] of Object.entries(allDataBySource)) { const lc = {}; items.forEach(d => { lc[d.language||'Unknown'] = (lc[d.language||'Unknown']||0)+1; }); langBySource[src] = lc; }
+  const allLangs = [...new Set(Object.values(langBySource).flatMap(lc => Object.keys(lc)))].sort();
+  const series = Object.entries(langBySource).map(([src,lc]) => ({name:SRC_LABELS[src]||src,type:'bar',stack:'total',data:allLangs.map(l=>lc[l]||0),itemStyle:{color:SRC_COLORS[src]||'#86909C'}}));
+  msCharts.langDist.setOption({tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},legend:{textStyle:{color:'#4E5969'}},grid:{left:'3%',right:'4%',bottom:'3%',containLabel:true},xAxis:{type:'category',data:allLangs,axisLabel:{color:'#86909C',rotate:45,fontSize:10}},yAxis:{type:'value',axisLabel:{color:'#86909C'},splitLine:{lineStyle:{color:'#F2F3F5'}}},series}, true);
+  window.addEventListener('resize', () => msCharts.langDist?.resize());
+}
+function renderMsHotCompare(allDataBySource) {
+  const el = $('ms-hot-compare'); if (!el) return;
+  if (!msCharts.hotCompare) msCharts.hotCompare = echarts.init(el);
+  const filteredEntries = Object.entries(allDataBySource).filter(([,items]) => items.reduce((a,b)=>a+(b.hot_score||0),0) > 0);
+  if (!filteredEntries.length) { el.parentElement.innerHTML = '<div style="text-align:center;color:var(--text3);padding:40px">暂无有效热度分数据</div>'; return; }
+  const series = [];
+  for (const [src, items] of filteredEntries) { const top10 = [...items].sort((a,b)=>(b.hot_score||0)-(a.hot_score||0)).slice(0,10); series.push({name:SRC_LABELS[src]||src,type:'bar',data:top10.map(d=>d.hot_score||0),itemStyle:{color:SRC_COLORS[src]||'#86909C',borderRadius:[4,4,0,0]}}); }
+  const maxLen = Math.max(...filteredEntries.map(([,items])=>Math.min(items.length,10)));
+  const categories = Array.from({length:maxLen},(_,i)=>`Top ${i+1}`);
+  msCharts.hotCompare.setOption({tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},legend:{textStyle:{color:'#4E5969'}},grid:{left:'3%',right:'4%',bottom:'3%',containLabel:true},xAxis:{type:'category',data:categories,axisLabel:{color:'#86909C'}},yAxis:{type:'value',axisLabel:{color:'#86909C'},splitLine:{lineStyle:{color:'#F2F3F5'}}},series}, true);
+  window.addEventListener('resize', () => msCharts.hotCompare?.resize());
+}
+function showSourceDetail(src, allDataBySource) {
+  const el = $('ms-source-detail'); if (!el) return;
+  const items = allDataBySource[src] || [];
+  if (!items.length) { el.innerHTML = '<p style="color:var(--text3)">暂无数据</p>'; return; }
+  const isGithub = src === 'github'; const metricLabel = isGithub ? 'Stars' : 'Score';
+  let html = '<table><tr><th>#</th><th>名称</th><th>热度分</th><th>'+metricLabel+'</th><th>语言</th><th>描述</th></tr>';
+  [...items].sort((a,b)=>(b.hot_score||0)-(a.hot_score||0)).slice(0,30).forEach((d,i) => {
+    const metricVal = isGithub ? num(d.stars) : (d.score!=null?num(d.score):'-'); const lang = isGithub?(d.language||'Unknown'):'-';
+    html += `<tr><td>${i+1}</td><td><a href="${d.url||'#'}" target="_blank" style="color:var(--primary);text-decoration:none">${d.name||d.title||'-'}</a></td><td>${num(d.hot_score)}</td><td>${metricVal}</td><td><span class="tag ${SRC_TAG_CLASS[src]||''}">${lang}</span></td><td style="max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${d.description||'-'}</td></tr>`;
+  });
+  html += '</table>'; el.innerHTML = html;
+}
+
+// ================================================================
+// Insight Report
+// ================================================================
+function renderInsight() {
+  if (!insightChart) insightChart = echarts.init($('insight-chart'));
+  window.addEventListener('resize', () => insightChart?.resize());
+  updateInsightContent();
+  renderInsightChart();
+}
+
+function updateInsightContent() {
+  const data = getData();
+  if (!data.length) return;
+  const topStars = [...data].sort((a,b) => b.stars - a.stars)[0];
+  const topGrowth = [...data].sort((a,b) => b.stars_since - a.stars_since)[0];
+  const topHot = [...data].sort((a,b) => (b.hot_score||0) - (a.hot_score||0))[0];
+  const langCount = {}; data.forEach(item => { langCount[item.language||'Unknown'] = (langCount[item.language||'Unknown']||0)+1; });
+  const topLang = Object.entries(langCount).sort((a,b) => b[1]-a[1])[0];
+  const avgHotScore = Math.round((data.reduce((sum,item) => sum + (item.hot_score||0), 0) / data.length) * 100) / 100;
+  $('insight-top-stars').innerHTML = `<strong>${topStars.name.split('/')[1]||topStars.name}</strong><br>Stars: ${num(topStars.stars)}`;
+  $('insight-top-growth').innerHTML = `<strong>${topGrowth.name.split('/')[1]||topGrowth.name}</strong><br>日增长: +${num(topGrowth.stars_since)}`;
+  $('insight-top-hot').innerHTML = `<strong>${topHot.name.split('/')[1]||topHot.name}</strong><br>热度分: ${num(topHot.hot_score)}`;
+  $('insight-avg-hot').innerHTML = `当前榜单平均热度分<br><strong style="font-size:20px;">${avgHotScore}</strong>`;
+  $('insight-top-lang').innerHTML = `<strong>${topLang[0]}</strong><br>占比: ${topLang[1]} 个项目`;
+  // Dynamic insight cards
+  const langEntries = Object.entries(langCount).sort((a,b) => b[1]-a[1]);
+  const topLangName = langEntries[0]?.[0] || '';
+  const topLangCount = langEntries[0]?.[1] || 0;
+  const topLangPct = Math.round(topLangCount / data.length * 100);
+  const highGrowthProjects = data.filter(d => (d.stars_since||0) > 100).length;
+  const avgStars = Math.round(data.reduce((a,b) => a + (b.stars||0), 0) / data.length);
+  let cards = '';
+  if (topLangName === 'Python' || topLangName === 'TypeScript' || topLangName === 'Rust') {
+    cards += `<div class="insight-card"><div class="insight-title">🐍 ${topLangName} 生态主导地位</div><div class="insight-content">${topLangName} 以 ${topLangPct}% 的占比（${topLangCount} 个项目）领跑当前榜单，显示出强大的生态吸引力。平均 Stars 为 ${num(avgStars)}，反映了社区对该语言生态的持续关注。</div><div class="insight-meta"><span class="insight-tag">${topLangName}</span><span class="insight-tag">生态趋势</span></div></div>`;
+  }
+  if (highGrowthProjects > 0) {
+    cards += `<div class="insight-card"><div class="insight-title">📈 高增长项目涌现</div><div class="insight-content">当前榜单中有 ${highGrowthProjects} 个项目日增长超过 100 Stars，表明技术社区活跃度极高，新兴项目正在快速获得关注。</div><div class="insight-meta"><span class="insight-tag">高增长</span><span class="insight-tag">活跃社区</span></div></div>`;
+  }
+  const aiRelated = data.filter(d => (d.description||'').toLowerCase().includes('ai') || (d.description||'').toLowerCase().includes('agent') || (d.description||'').toLowerCase().includes('llm') || (d.description||'').toLowerCase().includes('gpt')).length;
+  if (aiRelated > 0) {
+    cards += `<div class="insight-card"><div class="insight-title">🤖 AI Agent 项目持续火热</div><div class="insight-content">当前榜单中有 ${aiRelated} 个 AI 相关项目，涵盖 Agent 框架、LLM 工具链等方向，AI 技术持续引领开源趋势。</div><div class="insight-meta"><span class="insight-tag">AI</span><span class="insight-tag">Agent</span><span class="insight-tag">LLM</span></div></div>`;
+  }
+  if (!cards) {
+    cards = `<div class="insight-card"><div class="insight-title">📊 数据概览</div><div class="insight-content">当前榜单共 ${data.length} 个项目，涵盖 ${langEntries.length} 种编程语言，平均 Stars 为 ${num(avgStars)}。</div><div class="insight-meta"><span class="insight-tag">数据概览</span></div></div>`;
+  }
+  $('insight-dynamic-cards').innerHTML = cards;
+}
+
+function renderInsightChart() {
+  const data = getData();
+  const langCount = {};
+  data.forEach(item => { langCount[item.language||'Unknown'] = (langCount[item.language||'Unknown']||0) + 1; });
+  const langEntries = Object.entries(langCount).sort((a,b) => b[1]-a[1]).slice(0,10);
+  insightChart.setOption({
+    tooltip:{trigger:'item',formatter:'{b}: {c} ({d}%)'},
+    series:[{type:'pie',radius:['35%','65%'],data:langEntries.map(([n,v])=>({name:n,value:v})),
+    itemStyle:{borderRadius:4,borderColor:'#fff',borderWidth:2},
+    label:{color:'#4E5969',fontSize:11}}]
+  }, true);
+}
+
+// ================================================================
+// AI Analysis
+// ================================================================
+let aiKeywordChart = null;
+let aiDataCache = null;
+let aiResizeHandler = null;
+
+function highlightRepoNames(text) {
+  return text.replace(/([a-zA-Z0-9_-]+\/[a-zA-Z0-9_.-]+)/g, '<span class="ai-repo-tag">$1</span>');
+}
+
+function renderAIItems(containerId, items, typeClass) {
+  const container = $(containerId);
+  if (!items || !items.length) {
+    container.innerHTML = '<div style="color:var(--text3);font-size:13px;">暂无数据</div>';
+    return;
+  }
+  container.innerHTML = items.map((text, i) =>
+    `<div class="ai-item-card ${typeClass}"><span class="ai-item-index">${i + 1}</span><span class="ai-item-text">${highlightRepoNames(text)}</span></div>`
+  ).join('');
+}
+
+function extractKeywords(data) {
+  const allText = [
+    ...(data['趋势识别'] || []),
+    ...(data['值得关注的项目'] || []),
+    ...(data['学习路径'] || []),
+    ...(data['信号挖掘'] || [])
+  ].join(' ');
+
+  const stopWords = new Set(['的','在','和','与','或','等','为','了','是','从','向','对','中','及','其','将','可','能','被','让','把','比','以','上','下','不','有','也','都','而','更','该','此','这','那','如','至','由','于','已','未','到','出','个','一','多','大','新','高','最','及','和','或','但','却','又','再','还','才','就','要','会','可以','可能','需要','应该','已经','正在','通过','进行','实现','提供','支持','使用','包括','涉及','显示','表明','反映','说明','本周','项目','趋势','方向','生态','框架','工具','代理','技能','开发','构建','学习','研究','参考','关注','推荐','建议','实践','掌握','理解','深入']);
+  const words = allText.match(/[\u4e00-\u9fff]{2,4}|[a-zA-Z][a-zA-Z0-9_-]*/g) || [];
+  const freq = {};
+  words.forEach(w => {
+    if (stopWords.has(w) || w.length < 2) return;
+    freq[w] = (freq[w] || 0) + 1;
+  });
+  return Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 20);
+}
+
+function analyzeSentiment(data) {
+  const positiveWords = ['爆发','增长','提升','突破','火热','推荐','优势','实用','价值','机遇','领先','强劲','高速','创新','崛起','加速','繁荣','活跃','优秀','卓越','成功','进步','蓬勃发展','持续升温','高速增长','极大','显著','广泛','积极','利好','突破性','里程碑','现象级','极具','完善','成熟','丰富','强大','优异','领先','蓬勃发展','普及','落地','驱动','推动','促进','引领','赋能','助力','优化','升级','扩展','拓展','深耕','领先地位','核心竞争力'];
+  const negativeWords = ['风险','担忧','问题','挑战','困难','不足','通胀','下跌','衰退','危机','瓶颈','障碍','隐患','威胁','漏洞','缺陷','疲软','低迷','恶化','萎缩','停滞','滞后','脆弱','不稳定','不确定性','伦理','争议','冲突','代价','痛点','缺失','薄弱','严峻','恶化','滥用','过度','依赖','垄断','壁垒','封闭','碎片化','割裂','失控','失衡','泡沫','淘汰','衰落','侵蚀','破坏','恶意','对抗','绕过','绕过检测'];
+
+  const categories = [
+    { key: '趋势识别', items: data['趋势识别'] || [] },
+    { key: '值得关注的项目', items: data['值得关注的项目'] || [] },
+    { key: '学习路径', items: data['学习路径'] || [] },
+    { key: '信号挖掘', items: data['信号挖掘'] || [] }
+  ];
+
+  let positive = 0, neutral = 0, negative = 0;
+  const details = [];
+
+  categories.forEach(cat => {
+    cat.items.forEach(text => {
+      let posScore = 0, negScore = 0;
+      positiveWords.forEach(w => { if (text.includes(w)) posScore++; });
+      negativeWords.forEach(w => { if (text.includes(w)) negScore++; });
+
+      let sentiment;
+      if (posScore > negScore + 1) { sentiment = 'positive'; positive++; }
+      else if (negScore > posScore + 1) { sentiment = 'negative'; negative++; }
+      else if (posScore > 0 && negScore > 0) { sentiment = 'neutral'; neutral++; }
+      else if (posScore > 0) { sentiment = 'positive'; positive++; }
+      else if (negScore > 0) { sentiment = 'negative'; negative++; }
+      else { sentiment = 'neutral'; neutral++; }
+
+      details.push({ category: cat.key, text, sentiment, posScore, negScore });
+    });
+  });
+
+  return { positive, neutral, negative, total: positive + neutral + negative, details };
+}
+
+let aiSentimentChart = null;
+
+function renderAISentimentChart(sentimentData) {
+  if (!aiSentimentChart) aiSentimentChart = echarts.init($('ai-sentiment-chart'));
+  const { positive, neutral, negative } = sentimentData;
+  aiSentimentChart.setOption({
+    tooltip: {
+      trigger: 'item',
+      formatter: '{b}: {c} 条 ({d}%)'
+    },
+    legend: {
+      bottom: 0,
+      itemWidth: 12,
+      itemHeight: 12,
+      textStyle: { color: '#86909C', fontSize: 12 }
+    },
+    series: [{
+      type: 'pie',
+      radius: ['42%', '70%'],
+      center: ['50%', '45%'],
+      avoidLabelOverlap: true,
+      itemStyle: { borderRadius: 6, borderWidth: 2 },
+      label: {
+        show: true,
+        formatter: '{b}\n{d}%',
+        fontSize: 12,
+        color: '#4E5969'
+      },
+      labelLine: { length: 12, length2: 8 },
+      emphasis: {
+        label: { fontSize: 14, fontWeight: 'bold' },
+        itemStyle: { shadowBlur: 10, shadowOffsetX: 0, shadowColor: 'rgba(0,0,0,0.15)' }
+      },
+      data: [
+        { value: positive, name: '正面', itemStyle: { color: '#00B42A' } },
+        { value: neutral, name: '中性', itemStyle: { color: '#FF7D00' } },
+        { value: negative, name: '负面', itemStyle: { color: '#F53F3F' } }
+      ]
+    }]
+  }, true);
+}
+
+function renderAIKeywordChart(data) {
+  if (!aiKeywordChart) aiKeywordChart = echarts.init($('ai-keyword-chart'));
+  const keywords = extractKeywords(data);
+  if (!keywords.length) {
+    aiKeywordChart.setOption({
+      title: { text: '暂无关键词数据', left: 'center', top: 'middle', textStyle: { color: '#86909C', fontSize: 14 } }
+    }, true);
+    return;
+  }
+  const colors = ['#165DFF', '#00B42A', '#FF7D00', '#722ED1', '#0FC6C2', '#F53F3F', '#3491FA', '#14C9C9', '#F77234', '#9FDB1D'];
+  aiKeywordChart.setOption({
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+    grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+    xAxis: { type: 'value', axisLabel: { color: '#86909C' } },
+    yAxis: {
+      type: 'category',
+      data: keywords.map(e => e[0]).reverse(),
+      axisLabel: { color: '#86909C', fontSize: 12 }
+    },
+    series: [{
+      type: 'bar',
+      data: keywords.map((e, i) => ({
+        value: e[1],
+        itemStyle: { color: colors[i % colors.length], borderRadius: [0, 4, 4, 0] }
+      })).reverse(),
+      barMaxWidth: 22
+    }]
+  }, true);
+}
+
+async function renderAIAnalysis() {
+  setupAIRunButton();
+  $('ai-loading').style.display = 'block';
+  $('ai-error').style.display = 'none';
+  $('ai-content').style.display = 'none';
+
+  if (aiDataCache) {
+    displayAIAnalysis(aiDataCache);
+    return;
+  }
+
+  try {
+    const res = await fetchAPI('/api/ai-analysis/latest');
+    if (res.error) {
+      $('ai-loading').style.display = 'none';
+      $('ai-error').style.display = 'block';
+      $('ai-error-msg').textContent = res.error;
+      return;
+    }
+    aiDataCache = res.data;
+    displayAIAnalysis(res.data);
+  } catch (e) {
+    $('ai-loading').style.display = 'none';
+    $('ai-error').style.display = 'block';
+    $('ai-error-msg').textContent = '无法连接到数据服务，请确认 Flask API 服务器 (端口 5000) 已启动';
+  }
+}
+
+function displayAIAnalysis(data) {
+  $('ai-loading').style.display = 'none';
+  $('ai-content').style.display = 'block';
+
+  const meta = data.metadata || {};
+  $('ai-model').textContent = meta.model || '-';
+  $('ai-model-sub').textContent = meta.model ? `AI 模型` : '-';
+  $('ai-projects-count').textContent = meta.projects_count ? `${meta.projects_count}` : '-';
+
+  if (meta.analyzed_at) {
+    try {
+      const d = new Date(meta.analyzed_at);
+      $('ai-analyzed-at').textContent = d.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    } catch {
+      $('ai-analyzed-at').textContent = meta.analyzed_at;
+    }
+  } else {
+    $('ai-analyzed-at').textContent = '-';
+  }
+  $('ai-collection').textContent = meta.collection ? `数据集: ${meta.collection}` : '-';
+
+  const trendCount = (data['趋势识别'] || []).length;
+  const projectCount = (data['值得关注的项目'] || []).length;
+  const pathCount = (data['学习路径'] || []).length;
+  const signalCount = (data['信号挖掘'] || []).length;
+  $('ai-insight-count').textContent = `${trendCount + projectCount + pathCount + signalCount}`;
+
+  renderAIItems('ai-trends', data['趋势识别'], 'trend');
+  renderAIItems('ai-projects', data['值得关注的项目'], 'project');
+  renderAIItems('ai-paths', data['学习路径'], 'path');
+  renderAIItems('ai-signals', data['信号挖掘'], 'signal');
+
+  const sentimentData = analyzeSentiment(data);
+  renderAISentimentChart(sentimentData);
+
+  if (aiResizeHandler) window.removeEventListener('resize', aiResizeHandler);
+  aiResizeHandler = () => { aiSentimentChart?.resize(); aiKeywordChart?.resize(); };
+  window.addEventListener('resize', aiResizeHandler);
+}
+
+function setupAIRunButton() {
+  const btn = $('btn-ai-run');
+  if (!btn) return;
+  btn.onclick = async () => {
+    btn.disabled = true;
+    btn.innerHTML = '⏳ 分析中...';
+    btn.style.opacity = '0.7';
+    $('ai-loading').style.display = 'block';
+    $('ai-loading').querySelector('div:first-child').textContent = '🧠';
+    $('ai-loading').querySelector('div:last-child').textContent = 'AI 分析进行中，请稍候（约30-60秒）...';
+    $('ai-error').style.display = 'none';
+    $('ai-content').style.display = 'none';
+    try {
+      const res = await fetch(API + '/api/ai-analysis/run', { method: 'POST' });
+      const json = await res.json();
+      if (json.error) {
+        $('ai-loading').style.display = 'none';
+        $('ai-error').style.display = 'block';
+        $('ai-error-msg').textContent = json.error;
+      } else {
+        aiDataCache = json.data;
+        displayAIAnalysis(json.data);
+      }
+    } catch (e) {
+      $('ai-loading').style.display = 'none';
+      $('ai-error').style.display = 'block';
+      $('ai-error-msg').textContent = '无法连接到数据服务，请确认 API 服务已启动';
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polygon points="5 3 19 12 5 21 5 3"/></svg> 重新分析';
+      btn.style.opacity = '1';
+    }
+  };
+}
+</script>
+</body>
+</html>

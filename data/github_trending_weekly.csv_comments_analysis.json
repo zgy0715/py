@@ -1,0 +1,703 @@
+[
+  {
+    "repo": "CloakHQ/CloakBrowser",
+    "issues_count": 10,
+    "comments_count": 10,
+    "issue_sentiments": [
+      {
+        "title": "Many pages open as blank pages, such as baidu.com and qq.com. It seems only the first two tabs can open the webpage normally; any pages beyond that are blank.",
+        "sentiment": "neutral",
+        "score": 0.04477427334570191,
+        "user": "hhsacsb"
+      },
+      {
+        "title": "Add option to install extension when the profile is created, like gologin",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "ojtvpn"
+      },
+      {
+        "title": "Testing CloakBrowser through Docker Desktop and using https://fv.pro/",
+        "sentiment": "neutral",
+        "score": 0.04545454545454547,
+        "user": "xhat007"
+      },
+      {
+        "title": "CloakBrowser Profiles",
+        "sentiment": "neutral",
+        "score": -0.025000000000000005,
+        "user": "zackycodes"
+      },
+      {
+        "title": "Hi maintainers, just following up on this report.",
+        "sentiment": "positive",
+        "score": 0.24000000000000005,
+        "user": "0xlally"
+      },
+      {
+        "title": "K",
+        "sentiment": "positive",
+        "score": 0.4375,
+        "user": "Kamasik"
+      },
+      {
+        "title": "How to open browser with a specific profile on macOS?",
+        "sentiment": "neutral",
+        "score": 0.016666666666666666,
+        "user": "webparadoxer"
+      },
+      {
+        "title": "google.com not loading when using proxy",
+        "sentiment": "positive",
+        "score": 0.11785714285714285,
+        "user": "vladiulianbogdan"
+      },
+      {
+        "title": "camofaux vs cloak?",
+        "sentiment": "positive",
+        "score": 0.25,
+        "user": "sohommukherjee"
+      },
+      {
+        "title": "[JS] Export function to only build options",
+        "sentiment": "negative",
+        "score": -0.11487603305785124,
+        "user": "regseb"
+      }
+    ],
+    "comment_sentiments": [
+      {
+        "body": "> First of all, thank you for this amazing project. I really appreciate the work behind CloakBrowser...",
+        "sentiment": "positive",
+        "score": 0.16489898989898988,
+        "user": "hongyits"
+      },
+      {
+        "body": "Thanks for reaching out!\n\n**CloakBrowser Manager** runs via Docker on any OS including macOS:\n\n```ba...",
+        "sentiment": "positive",
+        "score": 0.145,
+        "user": "Cloak-HQ"
+      },
+      {
+        "body": "Hi, thanks for the reply!\n\nI think I may not have explained my goal clearly. I’m not looking for a w...",
+        "sentiment": "neutral",
+        "score": 0.04772727272727273,
+        "user": "webparadoxer"
+      },
+      {
+        "body": "Got it — you want native desktop shortcuts per profile, not the Manager web UI.\n\nYou can create a sm...",
+        "sentiment": "neutral",
+        "score": 0.061136363636363635,
+        "user": "Cloak-HQ"
+      },
+      {
+        "body": "Submitted in https://github.com/CloakHQ/CloakBrowser/pull/256 - codifies the maintainer reply as exa...",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "mvanhorn"
+      },
+      {
+        "body": "I've managed to make it work using this in args:\n\n```\n\"--disable-features=ClientHintsMetaEquivalentH...",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "vladiulianbogdan"
+      },
+      {
+        "body": "Thanks for the report and nice find on the root cause.\n\nThis is Chromium's ACCEPT_CH HTTP/2 frame me...",
+        "sentiment": "positive",
+        "score": 0.1924107142857143,
+        "user": "Cloak-HQ"
+      },
+      {
+        "body": "Both used compiled binaries to spoof fingerprinting. I would say cloak browser is better because mos...",
+        "sentiment": "positive",
+        "score": 0.27999999999999997,
+        "user": "jvarela07"
+      },
+      {
+        "body": "At least camoufox is real open source, this is just a wrapper repo without any real patches.",
+        "sentiment": "neutral",
+        "score": -0.033333333333333326,
+        "user": "lexiforest"
+      },
+      {
+        "body": "Submitted in https://github.com/CloakHQ/CloakBrowser/pull/257 - exports buildLaunchOptions and human...",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "mvanhorn"
+      }
+    ],
+    "users": {
+      "hhsacsb": {
+        "login": "hhsacsb",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 1,
+        "public_repos": 2,
+        "created_at": "2017-10-27T03:23:53Z"
+      },
+      "ojtvpn": {
+        "login": "ojtvpn",
+        "name": "JAYMAR DAVID DORONIO",
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 2,
+        "public_repos": 8,
+        "created_at": "2025-07-08T18:35:17Z"
+      },
+      "xhat007": {
+        "login": "xhat007",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 10,
+        "public_repos": 4,
+        "created_at": "2020-06-08T23:00:50Z"
+      },
+      "zackycodes": {
+        "login": "zackycodes",
+        "name": "zack",
+        "company": null,
+        "location": null,
+        "followers": 1,
+        "following": 3,
+        "public_repos": 17,
+        "created_at": "2020-11-29T14:36:24Z"
+      },
+      "0xlally": {
+        "login": "0xlally",
+        "name": "lally",
+        "company": null,
+        "location": "Yunnan University",
+        "followers": 2,
+        "following": 0,
+        "public_repos": 7,
+        "created_at": "2024-10-31T13:36:25Z"
+      },
+      "Kamasik": {
+        "login": "Kamasik",
+        "name": null,
+        "company": null,
+        "location": "Ukraine ",
+        "followers": 0,
+        "following": 0,
+        "public_repos": 6,
+        "created_at": "2024-10-20T11:21:24Z"
+      },
+      "webparadoxer": {
+        "login": "webparadoxer",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 16,
+        "following": 8,
+        "public_repos": 19,
+        "created_at": "2013-09-20T17:17:22Z"
+      },
+      "vladiulianbogdan": {
+        "login": "vladiulianbogdan",
+        "name": "Bogdan Vlad",
+        "company": "Genez.io",
+        "location": "Brussels, Belgium",
+        "followers": 19,
+        "following": 4,
+        "public_repos": 96,
+        "created_at": "2012-10-20T07:44:46Z"
+      },
+      "sohommukherjee": {
+        "login": "sohommukherjee",
+        "name": "Sohom",
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 23,
+        "created_at": "2022-03-02T09:44:45Z"
+      },
+      "regseb": {
+        "login": "regseb",
+        "name": "Sébastien Règne",
+        "company": null,
+        "location": "Aix-en-Provence, France",
+        "followers": 43,
+        "following": 0,
+        "public_repos": 20,
+        "created_at": "2011-12-14T13:14:50Z"
+      },
+      "hongyits": {
+        "login": "hongyits",
+        "name": "LonelyWeed",
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 8,
+        "public_repos": 41,
+        "created_at": "2016-09-25T09:24:42Z"
+      },
+      "Cloak-HQ": {
+        "login": "Cloak-HQ",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 62,
+        "following": 1,
+        "public_repos": 6,
+        "created_at": "2026-02-24T18:06:46Z"
+      },
+      "mvanhorn": {
+        "login": "mvanhorn",
+        "name": "Matt Van Horn",
+        "company": null,
+        "location": null,
+        "followers": 1773,
+        "following": 5,
+        "public_repos": 1017,
+        "created_at": "2010-10-26T19:09:59Z"
+      },
+      "jvarela07": {
+        "login": "jvarela07",
+        "name": "Jonathan ",
+        "company": null,
+        "location": "Florida",
+        "followers": 0,
+        "following": 0,
+        "public_repos": 0,
+        "created_at": "2015-05-10T03:27:08Z"
+      },
+      "lexiforest": {
+        "login": "lexiforest",
+        "name": null,
+        "company": "Riverside AI LLC",
+        "location": null,
+        "followers": 103,
+        "following": 1,
+        "public_repos": 20,
+        "created_at": "2018-11-17T09:39:46Z"
+      }
+    }
+  },
+  {
+    "repo": "yikart/AiToEarn",
+    "issues_count": 10,
+    "comments_count": 10,
+    "issue_sentiments": [
+      {
+        "title": "能新增一些渠道吗",
+        "sentiment": "positive",
+        "score": 0.19166666666666665,
+        "user": "weiambt"
+      },
+      {
+        "title": "[Issue] docker compose up -d 拉取镜像失败：aitoearn/aitoearn-web:latest not found",
+        "sentiment": "neutral",
+        "score": -0.026948051948051943,
+        "user": "zuoxianwen"
+      },
+      {
+        "title": "docker本地部署之后,agent素材点击后提示链接不存在",
+        "sentiment": "positive",
+        "score": 0.1857142857142857,
+        "user": "PrimaryCY"
+      },
+      {
+        "title": "Docuker本地部署，使用AI写作助手调用的不是我配置的大模型，而是：https://aitoearn.ai/api/ai/chat,请问部署文档和镜像什么时候更新呢?",
+        "sentiment": "positive",
+        "score": 0.1857142857142857,
+        "user": "PrimaryCY"
+      },
+      {
+        "title": "[Bug] 抖音账号粉丝数始终显示为0，无法接需粉丝门槛的任务",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "dong19850718"
+      },
+      {
+        "title": "[SECURITY] Critical: Insecure Account Binding in Relay OAuth Callback",
+        "sentiment": "positive",
+        "score": 0.10925925925925924,
+        "user": "RinZ27"
+      },
+      {
+        "title": "刷到很多提示词生成，在手机端怎么用的",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "Frank-1996-yuan"
+      },
+      {
+        "title": "请问如果我要用自己的大模型，我要怎么部署呢？网页版还是docker版还是小龙虾版或者ai工具版？",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "180xieshao"
+      },
+      {
+        "title": "Facebook授權登錄問題",
+        "sentiment": "positive",
+        "score": 0.13333333333333333,
+        "user": "Johnson8087"
+      },
+      {
+        "title": "本地docker部署成功，调用AI聊天弹出：您的积分余额不足，请及时充值以继续使用",
+        "sentiment": "positive",
+        "score": 0.13333333333333333,
+        "user": "lovezhqj"
+      }
+    ],
+    "comment_sentiments": [
+      {
+        "body": "我也是，感觉好多bug",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "lovezhqj"
+      },
+      {
+        "body": "\n## 🔍 Root Cause Analysis (by @dong19850718)\n\nFound the bug in the source code:\n\n### 1. `douyin-api....",
+        "sentiment": "neutral",
+        "score": -0.075,
+        "user": "dong19850718"
+      },
+      {
+        "body": "什么时候修复",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "lovezhqj"
+      },
+      {
+        "body": "我也是",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "NIU-123370"
+      },
+      {
+        "body": "\n## 📢 官方客服已确认\n\n通过AiToEarn客服渠道，官方已回复：\n\n> **\"是我的bug，正在修\"** / \"It's our bug, we're fixing it.\"\n\n说明：\n1. ...",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "dong19850718"
+      },
+      {
+        "body": "\n## 📢 官方客服二次确认（2026-05-14）\n\n官方确认修复方案：\n> **\"has been fixed, will be released in 2.2.0\"**\n\n状态：\n- ✅ 服务端...",
+        "sentiment": "neutral",
+        "score": 0.1,
+        "user": "dong19850718"
+      },
+      {
+        "body": "自己大模型 只能 docker部署和开发部署",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "lovezhqj"
+      },
+      {
+        "body": "我的意思是自己买的中转key，对接聚合平台的大模型。",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "180xieshao"
+      },
+      {
+        "body": "我也有这个问题,点击agent就会有这个问题",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "PrimaryCY"
+      },
+      {
+        "body": "我也遇到了这个问题",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "mazezen"
+      }
+    ],
+    "users": {
+      "weiambt": {
+        "login": "weiambt",
+        "name": "LimitlessSky",
+        "company": null,
+        "location": "beijing , China",
+        "followers": 0,
+        "following": 12,
+        "public_repos": 35,
+        "created_at": "2020-03-19T09:43:40Z"
+      },
+      "zuoxianwen": {
+        "login": "zuoxianwen",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 1,
+        "created_at": "2017-10-19T04:24:05Z"
+      },
+      "PrimaryCY": {
+        "login": "PrimaryCY",
+        "name": "CY",
+        "company": null,
+        "location": "china",
+        "followers": 2,
+        "following": 2,
+        "public_repos": 24,
+        "created_at": "2018-09-04T06:24:09Z"
+      },
+      "dong19850718": {
+        "login": "dong19850718",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 0,
+        "created_at": "2026-05-08T14:37:37Z"
+      },
+      "RinZ27": {
+        "login": "RinZ27",
+        "name": "Rin",
+        "company": null,
+        "location": "Vietnam",
+        "followers": 34,
+        "following": 0,
+        "public_repos": 167,
+        "created_at": "2025-07-22T11:57:43Z"
+      },
+      "Frank-1996-yuan": {
+        "login": "Frank-1996-yuan",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 0,
+        "created_at": "2026-05-13T08:38:18Z"
+      },
+      "180xieshao": {
+        "login": "180xieshao",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 0,
+        "created_at": "2026-04-08T02:11:48Z"
+      },
+      "Johnson8087": {
+        "login": "Johnson8087",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 2,
+        "following": 11,
+        "public_repos": 10,
+        "created_at": "2013-02-25T09:02:36Z"
+      },
+      "lovezhqj": {
+        "login": "lovezhqj",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 4,
+        "created_at": "2020-03-29T04:21:51Z"
+      },
+      "NIU-123370": {
+        "login": "NIU-123370",
+        "name": "Ruibo niu",
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 1,
+        "public_repos": 9,
+        "created_at": "2024-12-08T07:34:37Z"
+      },
+      "mazezen": {
+        "login": "mazezen",
+        "name": "mazezen",
+        "company": null,
+        "location": null,
+        "followers": 48,
+        "following": 13,
+        "public_repos": 48,
+        "created_at": "2018-01-18T01:41:58Z"
+      }
+    }
+  },
+  {
+    "repo": "rohitg00/agentmemory",
+    "issues_count": 10,
+    "comments_count": 3,
+    "issue_sentiments": [
+      {
+        "title": "Viewer dashboard crashes when a session record is missing id/project",
+        "sentiment": "neutral",
+        "score": 0.013978494623655921,
+        "user": "easondada"
+      },
+      {
+        "title": "`AGENTMEMORY_DROP_STALE_INDEX=true` in `.env` has no effect; vectors persist at 2048-dim even with `EMBEDDING_PROVIDER=local`",
+        "sentiment": "neutral",
+        "score": 0.008244206773618541,
+        "user": "LeonemFu"
+      },
+      {
+        "title": "Worker refuses to start after embedding provider change: stale index dimension mismatch (2048D vs 384D)",
+        "sentiment": "negative",
+        "score": -0.11098484848484848,
+        "user": "nickdesi"
+      },
+      {
+        "title": "MCP `memory_recall` is aliased to smart-search and drops `format` param - full content unreachable via MCP",
+        "sentiment": "neutral",
+        "score": -0.08458110516934048,
+        "user": "MarvinFS"
+      },
+      {
+        "title": "support Volcengine embedding model URL",
+        "sentiment": "negative",
+        "score": -0.4,
+        "user": "ustczzh"
+      },
+      {
+        "title": "[BUG] Proxy Detected, Cannot Install",
+        "sentiment": "neutral",
+        "score": -0.039999999999999994,
+        "user": "kutzki"
+      },
+      {
+        "title": "[Question] Desktop Apps Auto-detect?",
+        "sentiment": "negative",
+        "score": -0.52,
+        "user": "kutzki"
+      },
+      {
+        "title": "Fly deployment proxy doesn't work",
+        "sentiment": "neutral",
+        "score": 0.020833333333333363,
+        "user": "imcvampire"
+      },
+      {
+        "title": "Expose agent_id / session_id in /agentmemory/audit so external rate-limiters can scope per-agent",
+        "sentiment": "neutral",
+        "score": -0.07681704260651631,
+        "user": "healdigital"
+      },
+      {
+        "title": "Feature Request: Native Hooks / Auto-Context Injection for OpenCode",
+        "sentiment": "positive",
+        "score": 0.1535714285714286,
+        "user": "nickdesi"
+      }
+    ],
+    "comment_sentiments": [
+      {
+        "body": "## Update: patch tested end-to-end against a real installation\n\nI built the proposed fix locally (br...",
+        "sentiment": "neutral",
+        "score": -0.0631578947368421,
+        "user": "MarvinFS"
+      },
+      {
+        "body": "https://github.com/rohitg00/agentmemory/blob/3a3f866ab52b3fb21b125bd7cf3a105475bc3f67/src/providers/...",
+        "sentiment": "negative",
+        "score": -0.8,
+        "user": "wyh0626"
+      },
+      {
+        "body": "[2026-05-17T05_27_37_308Z-debug-0.log](https://github.com/user-attachments/files/27877605/2026-05-17...",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "kutzki"
+      }
+    ],
+    "users": {
+      "easondada": {
+        "login": "easondada",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 5,
+        "created_at": "2015-01-14T13:43:59Z"
+      },
+      "LeonemFu": {
+        "login": "LeonemFu",
+        "name": "Fu",
+        "company": "ChituGame",
+        "location": "80 M St SE Washington, DC 20003",
+        "followers": 0,
+        "following": 0,
+        "public_repos": 2,
+        "created_at": "2016-02-29T12:03:08Z"
+      },
+      "nickdesi": {
+        "login": "nickdesi",
+        "name": "Nick 63",
+        "company": null,
+        "location": "France",
+        "followers": 1,
+        "following": 0,
+        "public_repos": 13,
+        "created_at": "2018-04-12T18:55:54Z"
+      },
+      "MarvinFS": {
+        "login": "MarvinFS",
+        "name": "Vladimir",
+        "company": null,
+        "location": "Bucharest, Romania",
+        "followers": 2,
+        "following": 1,
+        "public_repos": 10,
+        "created_at": "2014-06-26T18:00:09Z"
+      },
+      "ustczzh": {
+        "login": "ustczzh",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 13,
+        "following": 129,
+        "public_repos": 41,
+        "created_at": "2013-03-26T12:13:58Z"
+      },
+      "kutzki": {
+        "login": "kutzki",
+        "name": "Shaya",
+        "company": "1995",
+        "location": null,
+        "followers": 2,
+        "following": 5,
+        "public_repos": 7,
+        "created_at": "2013-08-12T19:19:27Z"
+      },
+      "imcvampire": {
+        "login": "imcvampire",
+        "name": "Quoc-Anh Nguyen",
+        "company": null,
+        "location": "Helsinki, Finland",
+        "followers": 95,
+        "following": 66,
+        "public_repos": 172,
+        "created_at": "2014-10-28T03:59:32Z"
+      },
+      "healdigital": {
+        "login": "healdigital",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 11,
+        "created_at": "2023-08-10T07:46:18Z"
+      },
+      "wyh0626": {
+        "login": "wyh0626",
+        "name": "yinhewang",
+        "company": "Kn Group",
+        "location": "shanghai",
+        "followers": 5,
+        "following": 24,
+        "public_repos": 54,
+        "created_at": "2018-11-13T00:52:07Z"
+      }
+    }
+  }
+]
