@@ -1,0 +1,851 @@
+[
+  {
+    "repo": "mattpocock/skills",
+    "issues_count": 10,
+    "comments_count": 11,
+    "issue_sentiments": [
+      {
+        "title": "Claude doesn't treat `XXXXXX` as a placeholder in `mktemp -t handoff-XXXXXX.md`",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "wujekbogdan"
+      },
+      {
+        "title": "[Feature] Add a /ce-compound-like skills to codify and reuse knowledge",
+        "sentiment": "neutral",
+        "score": -0.006434343434343438,
+        "user": "chenhaoqiang"
+      },
+      {
+        "title": "Question: Would GLOSSARY.md Be A Better Name For CONTEXT.md?",
+        "sentiment": "positive",
+        "score": 0.24758522727272728,
+        "user": "halso"
+      },
+      {
+        "title": "Update deprecated mktemp command in handoff skill documentation",
+        "sentiment": "positive",
+        "score": 0.20000000000000004,
+        "user": "smoove"
+      },
+      {
+        "title": "Add skills to existing repo",
+        "sentiment": "positive",
+        "score": 0.5121212121212121,
+        "user": "david-plugge"
+      },
+      {
+        "title": "Handoff skill suggestion",
+        "sentiment": "neutral",
+        "score": 0.023214285714285715,
+        "user": "RobinJehn"
+      },
+      {
+        "title": "triage generates duplicate acceptance criteria in local issue markdown",
+        "sentiment": "neutral",
+        "score": 0.02166666666666666,
+        "user": "Softmoonlit"
+      },
+      {
+        "title": "Proposal: add a skill orchestrator for choosing skill workflows",
+        "sentiment": "neutral",
+        "score": 0.07881773399014778,
+        "user": "mihaisavezi"
+      },
+      {
+        "title": "How should installed skills be updated when the source repository changes?",
+        "sentiment": "neutral",
+        "score": -0.03333333333333333,
+        "user": "valiantyan"
+      },
+      {
+        "title": "New skill proposal: /visualize-architecture",
+        "sentiment": "positive",
+        "score": 0.17454545454545456,
+        "user": "parthalon025"
+      }
+    ],
+    "comment_sentiments": [
+      {
+        "body": "We built exactly this and have been running it in production for 3 months. Sharing what works and wh...",
+        "sentiment": "negative",
+        "score": -0.10133779264214048,
+        "user": "xg-gh-25"
+      },
+      {
+        "body": "The rest of the skill, and `CONTEXT-FORMAT.md`, seem to imply domain-model context rather than a lit...",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "smanaton"
+      },
+      {
+        "body": "True!",
+        "sentiment": "positive",
+        "score": 0.4375,
+        "user": "mattpocock"
+      },
+      {
+        "body": "As per [Skills repo](https://github.com/vercel-labs/skills), you need to run `npx skills update`",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "erikpr1994"
+      },
+      {
+        "body": "When I run the proposed command I get:\n\n```\n> npx skills@latest update mattpocock/skills\nUpdating ma...",
+        "sentiment": "neutral",
+        "score": -0.1,
+        "user": "miwurster"
+      },
+      {
+        "body": "Do you have the skills in the `skills-lock.json` file?\nIf not, I would say it's better to remove the...",
+        "sentiment": "positive",
+        "score": 0.5,
+        "user": "erikpr1994"
+      },
+      {
+        "body": "I know this doesn't directly address using the official npm-driven path, but incase it helps here is...",
+        "sentiment": "neutral",
+        "score": 0.049999999999999996,
+        "user": "r4j4h"
+      },
+      {
+        "body": "I noticed that the `npx skills@latest update` command should be called w/o any further params (or th...",
+        "sentiment": "positive",
+        "score": 0.2875,
+        "user": "miwurster"
+      },
+      {
+        "body": "This is fundamentally an ownership problem, not an update mechanism problem.\n\n**The question beneath...",
+        "sentiment": "neutral",
+        "score": -0.010909090909090905,
+        "user": "xg-gh-25"
+      },
+      {
+        "body": "hey @parthalon025 , could you please provide a link? Thank you!",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "peppertom"
+      },
+      {
+        "body": "This sounds cool, need a link",
+        "sentiment": "positive",
+        "score": 0.35,
+        "user": "mattpocock"
+      }
+    ],
+    "users": {
+      "wujekbogdan": {
+        "login": "wujekbogdan",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 10,
+        "following": 6,
+        "public_repos": 27,
+        "created_at": "2010-12-22T23:43:11Z"
+      },
+      "chenhaoqiang": {
+        "login": "chenhaoqiang",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 2,
+        "following": 1,
+        "public_repos": 2,
+        "created_at": "2016-06-21T07:51:20Z"
+      },
+      "halso": {
+        "login": "halso",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 1,
+        "public_repos": 4,
+        "created_at": "2011-08-18T08:27:25Z"
+      },
+      "smoove": {
+        "login": "smoove",
+        "name": "Janek Noest",
+        "company": null,
+        "location": "Germany",
+        "followers": 5,
+        "following": 2,
+        "public_repos": 19,
+        "created_at": "2010-09-27T15:41:28Z"
+      },
+      "david-plugge": {
+        "login": "david-plugge",
+        "name": "David Plugge",
+        "company": null,
+        "location": "Germany",
+        "followers": 14,
+        "following": 0,
+        "public_repos": 59,
+        "created_at": "2020-01-16T16:57:47Z"
+      },
+      "RobinJehn": {
+        "login": "RobinJehn",
+        "name": "Robin Jehn",
+        "company": null,
+        "location": null,
+        "followers": 8,
+        "following": 14,
+        "public_repos": 17,
+        "created_at": "2020-09-21T15:08:13Z"
+      },
+      "Softmoonlit": {
+        "login": "Softmoonlit",
+        "name": "kilome",
+        "company": "Inner Mongolia University",
+        "location": "Inner Mongolia",
+        "followers": 0,
+        "following": 0,
+        "public_repos": 9,
+        "created_at": "2019-10-23T02:55:46Z"
+      },
+      "mihaisavezi": {
+        "login": "mihaisavezi",
+        "name": "Mihai",
+        "company": null,
+        "location": "Bucharest, Romania",
+        "followers": 26,
+        "following": 77,
+        "public_repos": 86,
+        "created_at": "2014-03-16T10:14:19Z"
+      },
+      "valiantyan": {
+        "login": "valiantyan",
+        "name": "yanhao",
+        "company": null,
+        "location": "深圳",
+        "followers": 8,
+        "following": 60,
+        "public_repos": 25,
+        "created_at": "2013-09-18T06:38:41Z"
+      },
+      "parthalon025": {
+        "login": "parthalon025",
+        "name": "Justin",
+        "company": null,
+        "location": "Northwest Florida",
+        "followers": 4,
+        "following": 9,
+        "public_repos": 14,
+        "created_at": "2021-03-12T19:22:49Z"
+      },
+      "xg-gh-25": {
+        "login": "xg-gh-25",
+        "name": "Xiaogang Wang",
+        "company": "@aws",
+        "location": "Beijing",
+        "followers": 3,
+        "following": 2,
+        "public_repos": 3,
+        "created_at": "2025-12-07T10:08:28Z"
+      },
+      "smanaton": {
+        "login": "smanaton",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 4,
+        "following": 2,
+        "public_repos": 15,
+        "created_at": "2013-05-10T08:26:42Z"
+      },
+      "mattpocock": {
+        "login": "mattpocock",
+        "name": "Matt Pocock",
+        "company": "Total TypeScript",
+        "location": "Oxfordshire",
+        "followers": 17171,
+        "following": 33,
+        "public_repos": 220,
+        "created_at": "2017-05-02T09:05:18Z"
+      },
+      "erikpr1994": {
+        "login": "erikpr1994",
+        "name": "Erik Pastor Rios",
+        "company": null,
+        "location": "España",
+        "followers": 31,
+        "following": 15,
+        "public_repos": 19,
+        "created_at": "2014-01-01T22:51:07Z"
+      },
+      "miwurster": {
+        "login": "miwurster",
+        "name": "Michael Wurster",
+        "company": "Kipu Quantum GmbH",
+        "location": "Stuttgart, Germany",
+        "followers": 40,
+        "following": 14,
+        "public_repos": 5,
+        "created_at": "2012-10-21T07:32:51Z"
+      },
+      "r4j4h": {
+        "login": "r4j4h",
+        "name": "Jasmine Hegman",
+        "company": null,
+        "location": "Arizona, US",
+        "followers": 106,
+        "following": 86,
+        "public_repos": 135,
+        "created_at": "2011-04-01T04:47:56Z"
+      },
+      "peppertom": {
+        "login": "peppertom",
+        "name": "Tamas Vigh",
+        "company": "@devmads",
+        "location": "Pécs, Hungary",
+        "followers": 4,
+        "following": 17,
+        "public_repos": 27,
+        "created_at": "2015-12-23T14:37:37Z"
+      }
+    }
+  },
+  {
+    "repo": "Alishahryar1/free-claude-code",
+    "issues_count": 10,
+    "comments_count": 11,
+    "issue_sentiments": [
+      {
+        "title": "It is timing out",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "CM71103"
+      },
+      {
+        "title": "Provider API Issue.",
+        "sentiment": "negative",
+        "score": -0.125,
+        "user": "athoosai059-prog"
+      },
+      {
+        "title": "Help with discord bot",
+        "sentiment": "positive",
+        "score": 0.2672727272727272,
+        "user": "Andhikaliff"
+      },
+      {
+        "title": "request support Google AI studio account API.",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "pitta111"
+      },
+      {
+        "title": "204 No content",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "hideonbash00"
+      },
+      {
+        "title": "got the \"[Errno 2] No such file or directory\"",
+        "sentiment": "neutral",
+        "score": -0.049999999999999996,
+        "user": "theteslabro"
+      },
+      {
+        "title": "Error code: 400 - {'error': {'message': \"This model's maximum context length is 196608  tokens. } }",
+        "sentiment": "negative",
+        "score": -0.5499999999999999,
+        "user": "neno-research"
+      },
+      {
+        "title": "Problem Loading models from Nvidia NIM or Openrouter",
+        "sentiment": "positive",
+        "score": 0.15,
+        "user": "mr-wolf-gb"
+      },
+      {
+        "title": "FCC claude issue -  sys.exit(launch_claude())",
+        "sentiment": "neutral",
+        "score": -0.0625,
+        "user": "vashisth00"
+      },
+      {
+        "title": "(HOW-TO-FIX) - fcc-server issue",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "helloeduardkenneth"
+      }
+    ],
+    "comment_sentiments": [
+      {
+        "body": "Try changing the model to nvidia_nim/moonshotai/kimi-k2.6",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "MaverickOff"
+      },
+      {
+        "body": "C:\\Users\\yourname\\ .fcc\\ .env\nI'm a newbie too; it might be in this file.",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "abcKFC68"
+      },
+      {
+        "body": "I used the Minimax 2.5 free version via opencode. When the token reached 196K, the same compacting. ...",
+        "sentiment": "neutral",
+        "score": 0.05500000000000001,
+        "user": "neno-research"
+      },
+      {
+        "body": "same here",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "clementoverkill"
+      },
+      {
+        "body": "If you don't put their API keys, then they won't appear",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "Alishahryar1"
+      },
+      {
+        "body": "> If you don't put their API keys, then they won't appear\n\nIs that an Anthropic API Key?, I thought ...",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "blackmack63"
+      },
+      {
+        "body": "> vashisth@VBs-MacBook-Pro ~ % fcc-claude Traceback (most recent call last): File \"/Users/vashisth/....",
+        "sentiment": "neutral",
+        "score": -0.03,
+        "user": "joyjonesmark"
+      },
+      {
+        "body": "@Alishahryar1 ",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "helloeduardkenneth"
+      },
+      {
+        "body": "Run it in desktop",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "Alishahryar1"
+      },
+      {
+        "body": "Run powershell as admin then run fcc-server",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "mwindaji256"
+      },
+      {
+        "body": "<img width=\"1915\" height=\"1011\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/b45460dc...",
+        "sentiment": "negative",
+        "score": -0.5,
+        "user": "mwindaji256"
+      }
+    ],
+    "users": {
+      "CM71103": {
+        "login": "CM71103",
+        "name": "A.N.L.P ChandraMouli",
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 27,
+        "created_at": "2025-03-05T15:54:37Z"
+      },
+      "athoosai059-prog": {
+        "login": "athoosai059-prog",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 1,
+        "created_at": "2026-02-21T08:47:24Z"
+      },
+      "Andhikaliff": {
+        "login": "Andhikaliff",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 1,
+        "created_at": "2026-04-15T06:12:31Z"
+      },
+      "pitta111": {
+        "login": "pitta111",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 2,
+        "created_at": "2018-07-11T06:05:36Z"
+      },
+      "hideonbash00": {
+        "login": "hideonbash00",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 0,
+        "created_at": "2026-05-16T11:40:50Z"
+      },
+      "theteslabro": {
+        "login": "theteslabro",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 1,
+        "following": 2,
+        "public_repos": 13,
+        "created_at": "2022-06-03T09:45:07Z"
+      },
+      "neno-research": {
+        "login": "neno-research",
+        "name": "neno-research",
+        "company": "MS Student",
+        "location": null,
+        "followers": 1,
+        "following": 4,
+        "public_repos": 10,
+        "created_at": "2020-11-20T17:51:15Z"
+      },
+      "mr-wolf-gb": {
+        "login": "mr-wolf-gb",
+        "name": "ʍᴙ.ώoŁƒ",
+        "company": null,
+        "location": "Tn",
+        "followers": 60,
+        "following": 13,
+        "public_repos": 119,
+        "created_at": "2013-03-30T05:39:39Z"
+      },
+      "vashisth00": {
+        "login": "vashisth00",
+        "name": "Vashisth Bhushan",
+        "company": "www.adesignguy.co",
+        "location": "Gurgaon",
+        "followers": 79,
+        "following": 96,
+        "public_repos": 144,
+        "created_at": "2017-07-03T04:36:14Z"
+      },
+      "helloeduardkenneth": {
+        "login": "helloeduardkenneth",
+        "name": "eduard.dev",
+        "company": null,
+        "location": "Philippines",
+        "followers": 0,
+        "following": 0,
+        "public_repos": 14,
+        "created_at": "2022-09-07T16:48:55Z"
+      },
+      "MaverickOff": {
+        "login": "MaverickOff",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 1,
+        "public_repos": 3,
+        "created_at": "2019-08-29T01:29:55Z"
+      },
+      "abcKFC68": {
+        "login": "abcKFC68",
+        "name": "Li Chen Fan",
+        "company": "https://www.shiers.cn/",
+        "location": "No. 200, Yongkang Road, Shanghai, China",
+        "followers": 1,
+        "following": 8,
+        "public_repos": 12,
+        "created_at": "2023-08-16T05:32:08Z"
+      },
+      "clementoverkill": {
+        "login": "clementoverkill",
+        "name": "Clement Mumpa",
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 1,
+        "public_repos": 8,
+        "created_at": "2023-07-13T10:14:37Z"
+      },
+      "Alishahryar1": {
+        "login": "Alishahryar1",
+        "name": "Ali Khokhar",
+        "company": null,
+        "location": "Sunnyvale, CA",
+        "followers": 435,
+        "following": 1,
+        "public_repos": 7,
+        "created_at": "2016-07-15T12:36:57Z"
+      },
+      "blackmack63": {
+        "login": "blackmack63",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 1,
+        "created_at": "2021-01-20T16:14:16Z"
+      },
+      "joyjonesmark": {
+        "login": "joyjonesmark",
+        "name": "JOY JONES MARK J",
+        "company": null,
+        "location": null,
+        "followers": 1,
+        "following": 6,
+        "public_repos": 3,
+        "created_at": "2021-03-06T05:57:24Z"
+      },
+      "mwindaji256": {
+        "login": "mwindaji256",
+        "name": "mwindaji",
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 1,
+        "created_at": "2024-05-31T12:29:48Z"
+      }
+    }
+  },
+  {
+    "repo": "heygen-com/hyperframes",
+    "issues_count": 10,
+    "comments_count": 9,
+    "issue_sentiments": [
+      {
+        "title": "Sub-composition slot goes black after GSAP timeline ends, regardless of host data-duration",
+        "sentiment": "neutral",
+        "score": 0.059833333333333315,
+        "user": "CypherPoet"
+      },
+      {
+        "title": "(studio) Add keyboard shortcuts to toggle muting and looping (NLE standards)",
+        "sentiment": "neutral",
+        "score": 0.011111111111111112,
+        "user": "O1Anas"
+      },
+      {
+        "title": "(studio) Canvas zoom improvements (Zoom to cursor, Reset button, and border scaling bug)",
+        "sentiment": "neutral",
+        "score": -0.029629629629629634,
+        "user": "O1Anas"
+      },
+      {
+        "title": "Add timeline comments with agent resolution",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "virang-nimrobo"
+      },
+      {
+        "title": "Guide for Google Antigravity IDE and copilot users?",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "RDjarbeng"
+      },
+      {
+        "title": "Shader transitions are much slower than hard cuts despite workers",
+        "sentiment": "neutral",
+        "score": 0.0020833333333333346,
+        "user": "markwitt1"
+      },
+      {
+        "title": "Plugin does not exist in Cursor marketplace",
+        "sentiment": "positive",
+        "score": 0.35833333333333334,
+        "user": "akashlomas-nsi"
+      },
+      {
+        "title": "Add --data flag to render for parametrized renders (à la getRenderData)",
+        "sentiment": "neutral",
+        "score": -0.0390563801278087,
+        "user": "bigadamknight"
+      },
+      {
+        "title": "Dependency Dashboard",
+        "sentiment": "neutral",
+        "score": 0.02130713829627404,
+        "user": "renovate[bot]"
+      },
+      {
+        "title": "Cloudflare Workers / Cloudflare Browser Run support",
+        "sentiment": "neutral",
+        "score": 0.05714285714285714,
+        "user": "CanRau"
+      }
+    ],
+    "comment_sentiments": [
+      {
+        "body": "The \"canvas border expands inward when zooming\" bug also affects panning (added in PR #888 ). The ex...",
+        "sentiment": "positive",
+        "score": 0.30727272727272725,
+        "user": "O1Anas"
+      },
+      {
+        "body": "we'll make some preview improvements first, very good idea! after landing the changes, I'll comment ...",
+        "sentiment": "positive",
+        "score": 0.625,
+        "user": "miguel-heygen"
+      },
+      {
+        "body": "landed the preview improvements, you can try to make a pr for it, maybe we don't merge it internally...",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "miguel-heygen"
+      },
+      {
+        "body": "Sure! Let me make a pr and then we can discuss",
+        "sentiment": "positive",
+        "score": 0.625,
+        "user": "virang-nimrobo"
+      },
+      {
+        "body": "Additonal comment: I see the gemini cli is mentioned [here ](https://hyperframes.heygen.com/quicksta...",
+        "sentiment": "neutral",
+        "score": 0.0,
+        "user": "RDjarbeng"
+      },
+      {
+        "body": "@akashlomas-nsi thanks for the issue! We are still currently working on getting the plugin into the ...",
+        "sentiment": "positive",
+        "score": 0.125,
+        "user": "jrusso1020"
+      },
+      {
+        "body": "@bigadamknight I have a series of PRs related to this would be curious to see if you have any feedba...",
+        "sentiment": "neutral",
+        "score": -0.0625,
+        "user": "jrusso1020"
+      },
+      {
+        "body": "@CanRau the only way for now would be CF Container, using Railway can work too or deploying it on yo...",
+        "sentiment": "positive",
+        "score": 0.3,
+        "user": "miguel-heygen"
+      },
+      {
+        "body": "@CanRau we have a new cloudflare template here https://github.com/heygen-com/hyperframes-cloudflare-...",
+        "sentiment": "positive",
+        "score": 0.13636363636363635,
+        "user": "jrusso1020"
+      }
+    ],
+    "users": {
+      "CypherPoet": {
+        "login": "CypherPoet",
+        "name": "CypherPoet",
+        "company": "CypherPoet Art & Magic ⚡️",
+        "location": "Milky Way Galaxy",
+        "followers": 141,
+        "following": 9,
+        "public_repos": 114,
+        "created_at": "2019-01-19T20:38:16Z"
+      },
+      "O1Anas": {
+        "login": "O1Anas",
+        "name": "Anas - أنَس عِمران",
+        "company": null,
+        "location": null,
+        "followers": 5,
+        "following": 57,
+        "public_repos": 8,
+        "created_at": "2023-05-15T23:59:19Z"
+      },
+      "virang-nimrobo": {
+        "login": "virang-nimrobo",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 1,
+        "following": 3,
+        "public_repos": 3,
+        "created_at": "2025-05-16T03:23:36Z"
+      },
+      "RDjarbeng": {
+        "login": "RDjarbeng",
+        "name": "Richard Djarbeng",
+        "company": "rdjarbeng.com",
+        "location": null,
+        "followers": 66,
+        "following": 140,
+        "public_repos": 61,
+        "created_at": "2019-11-15T10:28:49Z"
+      },
+      "markwitt1": {
+        "login": "markwitt1",
+        "name": "Mark Witt",
+        "company": null,
+        "location": "Berlin",
+        "followers": 20,
+        "following": 21,
+        "public_repos": 39,
+        "created_at": "2017-10-20T13:30:12Z"
+      },
+      "akashlomas-nsi": {
+        "login": "akashlomas-nsi",
+        "name": null,
+        "company": "Net Solutions",
+        "location": "Chandigarh, India",
+        "followers": 0,
+        "following": 0,
+        "public_repos": 6,
+        "created_at": "2021-03-16T07:05:43Z"
+      },
+      "bigadamknight": {
+        "login": "bigadamknight",
+        "name": "Adam Knight",
+        "company": null,
+        "location": null,
+        "followers": 3,
+        "following": 3,
+        "public_repos": 6,
+        "created_at": "2013-04-25T09:48:22Z"
+      },
+      "renovate[bot]": {
+        "login": "renovate[bot]",
+        "name": null,
+        "company": null,
+        "location": null,
+        "followers": 0,
+        "following": 0,
+        "public_repos": 0,
+        "created_at": "2017-06-02T07:04:12Z"
+      },
+      "CanRau": {
+        "login": "CanRau",
+        "name": "Can Rau",
+        "company": "@konduktum",
+        "location": "Perú (originally from Berlin)",
+        "followers": 61,
+        "following": 59,
+        "public_repos": 172,
+        "created_at": "2013-08-09T11:41:43Z"
+      },
+      "miguel-heygen": {
+        "login": "miguel-heygen",
+        "name": "Miguel Ángel",
+        "company": null,
+        "location": null,
+        "followers": 50,
+        "following": 1,
+        "public_repos": 4,
+        "created_at": "2025-08-31T11:43:02Z"
+      },
+      "jrusso1020": {
+        "login": "jrusso1020",
+        "name": "James Russo",
+        "company": "@heygen-com ",
+        "location": "Ft. Lauderdale, Florida -> New York, New York",
+        "followers": 145,
+        "following": 2,
+        "public_repos": 38,
+        "created_at": "2014-05-22T03:17:45Z"
+      }
+    }
+  }
+]

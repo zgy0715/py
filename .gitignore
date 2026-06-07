@@ -1,0 +1,17 @@
+token.txt
+.env
+*.pyc
+__pycache__/
+node_modules/
+dist/
+*.pyo
+.pytest_cache/
+.tox/
+.eggs/
+*.egg-info/
+.idea/
+.claude/
+*.log
+.obsidian/
+AI分析/output/
+*.egg
